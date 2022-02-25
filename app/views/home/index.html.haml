@@ -1,2 +1,16 @@
-%h1 Home#index
-%p Find me in app/views/home/index.html.haml
+%header.row.container-fluid.text-center
+  -# logo
+  .col-sm-6.mb-3
+    .img-fluid= image_tag "shcart-logo.jpg", :height => 80
+  -# household name
+  .col-sm-3.mb-3
+    .img-fluid= image_tag "house.svg", :width => 40
+    %p.card-text myHouseName
+  -# household members
+  .col-sm-3.mb-3
+    .img-fluid= image_tag "members.svg", :width => 40
+    %p.card-text Members
+
+.main-options.row.container-fluid
+  - @cards.each do |name, src|
+    = render 'partials/home-card', :name => name, :src => src
