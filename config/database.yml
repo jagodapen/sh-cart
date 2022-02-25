@@ -23,13 +23,18 @@ default: &default
 
 development:
   <<: *default
-  database: sh_cart_development
+  database: shcart_development
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: <%= Rails.application.credentials.dig(:development, :database_username) %>
+  password: <%= Rails.application.credentials.dig(:development, :database_password) %>
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
   # the same name as the operating system user running Rails.
-  #username: sh_cart
+  #username: shcart
 
   # The password associated with the postgres role (username).
   #password:
@@ -57,7 +62,12 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: sh_cart_test
+  adapter: postgresql
+  encoding: unicode
+  database: shcart_test
+  pool: 5
+  username: <%= Rails.application.credentials.dig(:development, :database_username) %>
+  password: <%= Rails.application.credentials.dig(:development, :database_password) %>
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -81,6 +91,6 @@ test:
 #
 production:
   <<: *default
-  database: sh_cart_production
-  username: sh_cart
+  database: shcart_production
+  username: shcart
   password: <%= ENV["SH_CART_DATABASE_PASSWORD"] %>
