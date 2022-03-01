@@ -1,5 +1,4 @@
 %nav.nav.nav-pills.flex-column.flex-sm-row.text-dark
-  %a.flex-sm-fill.text-sm-center.nav-link.text-reset{"aria-current" => "page", href: "#"} Log In
-  %a.flex-sm-fill.text-sm-center.nav-link.text-reset{href: "#"}
-  %a.flex-sm-fill.text-sm-center.nav-link.disabled{"aria-disabled" => "true",href: "#", tabindex: "-1"}
-  %a.flex-sm-fill.text-sm-center.nav-link.text-reset{href: "#"} Sign In
+  %a.nav-link= link_to image_tag('home-page.svg', width: "30", class: "mt-1 ms-sm-3 ms-4"), root_path
+  %a.flex-grow-1.text-sm-start.nav-link.mx-3.mx-sm-5.text-reset{"aria-current" => "page", href: "#"} Log In
+  %a.text-sm-end.nav-link.text-reset.mx-3.mx-sm-5{href: "#"} Sign In

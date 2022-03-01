@@ -1,16 +1,19 @@
-= form_for @product do |f|
-  - if @product.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@product.errors.count, "error")} prohibited this product from being saved:"
-      %ul
-        - @product.errors.full_messages.each do |message|
-          %li= message
+-# - if @product.errors.any?
+-#   #error_explanation
+-#     %h2= "#{pluralize(@product.errors.count, "error")} prohibited this product from being saved:"
+-#     %ul
+-#       - @product.errors.full_messages.each do |message|
+-#         %li= message
 
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :unit
-    = f.text_field :unit
-  .actions
-    = f.submit 'Save'
+#form-container.bg-light.mx-5
+  = form_for @product do |f|
+    .row.m-2.py-4
+      .col-12.col-sm-8
+        #inputProductName= f.text_field :name, class: "form-control", placeholder: :name
+      .col-12.col-sm-4
+        #inputProductUnit= f.text_field :unit, class: "form-control", placeholder: :unit
+    .ps-4.pb-4
+      = link_to 'Show', @product, class: "btn btn-outline-dark" if @product.id
+      = f.submit 'Save', class: "btn btn-dark me-2", type: "submit"
+
+      -# = link_to 'Show', @product, class: "btn btn-outline-dark"

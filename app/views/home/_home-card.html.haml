@@ -1,6 +1,6 @@
 .col-sm-6.col-lg-3.mb-3.text-center
-  = link_to "#{name}" do
+  = link_to "#{name}", class: "text-dark text-decoration-none" do
     .card.mx-auto.d-block{style: "width: 100%;"}
-      %img.card-img-top= image_tag src, :width => 100
+      .my-3= image_tag src, :width => 100
       .card-body.text-dark.text-capitalize
         %p.card-text= name
