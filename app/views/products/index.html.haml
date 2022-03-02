@@ -2,13 +2,13 @@
   %button.btn.btn-dark.me-2{type: "button"}= link_to 'New Category', "#", class: 'text-light text-decoration-none'
   %button.btn.btn-dark.me-2{type: "button"}= link_to 'New Product', new_product_path, class: 'text-light text-decoration-none'
 
-#products-list-container.d-flex.my-2.mx-5.bg-light.position-relative{style: "height: 500px;" }
+#products-list-container.d-flex.my-2.mx-5.bg-light.position-relative{style: "height: calc( 100vh - 200px);" }
   %nav#products-list-navigation.d-flex.flex-column.align-items-start.p-2
     %a.list-group-item.list-group-item-action{href: "#category-1"} Category 1
     %a.list-group-item.list-group-item-action{href: "#category-2"} Category 2
     %a.list-group-item.list-group-item-action{href: "#category-3"} Category 3
     %a.list-group-item.list-group-item-action{href: "#category-4"} Category 4
-  .scrollspy.flex-grow-1.p-3{"data-bs-offset" => "100", "data-bs-spy" => "scroll", "data-bs-target" => "#products-list-navigation", tabindex: "0", style: "height: 480px; overflow-y: scroll;"}
+  .scrollspy.flex-grow-1.p-3{"data-bs-offset" => "100", "data-bs-spy" => "scroll", "data-bs-target" => "#products-list-navigation", tabindex: "0", style: "height: calc( 100vh - 220px); overflow-y: scroll;"}
     %h4#category-1 Category 1
     - @products.each do |product|
       .d-flex.list-group-item.list-group-item-action.p-1
