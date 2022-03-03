@@ -2,8 +2,8 @@
   .d-flex.p-1
     .px-2= @product.name
     .px-2.flex-grow-1.text-align-start= "(#{@product.unit})"
-    .px-2= link_to image_tag('edit.svg'), edit_product_path(@product)
-    .px-2= link_to image_tag('delete.svg'), @product, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }
+    .px-2.mx-2.edit-icon.shc-icon.position-relative= link_to "", edit_product_path(@product), class: "stretched-link"
+    .px-2.mx-2.delete-icon.shc-icon.position-relative= link_to "", @product, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "stretched-link"
   %h4.my-3.text-center= "Recipes with " + @product.name
 
 .mx-5.my-2= link_to '<<< Back', products_path, class: "text-dark text-decoration-none"
