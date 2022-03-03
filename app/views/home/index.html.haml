@@ -1,16 +1,16 @@
-%header.row.container-fluid.text-center
+%header.row.container-fluid.text-center.align-items-center
   -# logo
   .col-12.col-sm-6.mb-3
-    .img-fluid= image_tag "shcart-logo.jpg", :height => 80
+    #home-logo.shc-icon.img-fluid
   -# household name
   .col-6.col-sm-3.mb-3
-    .img-fluid= image_tag "house.svg", :width => 40
+    #home-myhouse-icon.shc-icon.img-fluid.mx-auto
     %p.card-text myHouseName
   -# household members
   .col-6.col-sm-3.mb-3
-    .img-fluid= image_tag "members.svg", :width => 40
+    #home-members-icon.shc-icon.img-fluid.mx-auto
     %p.card-text Members
 
 .main-options.row.container-fluid
-  - @cards.each do |name, src|
+  - home_cards.each do |name, src|
     = render 'home-card', :name => name, :src => src

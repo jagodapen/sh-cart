@@ -1,4 +1,4 @@
 %nav.nav.nav-pills.flex-column.flex-sm-row.text-dark
-  %a.nav-link= link_to image_tag('home-page.svg', width: "30", class: "mt-1 ms-sm-3 ms-4"), root_path
+  #home-page-nav-link.nav-link.position-relative.mt-1.ms-sm-5.ms-4= link_to "", root_path, :class => "stretched-link"
   %a.flex-grow-1.text-sm-start.nav-link.mx-3.mx-sm-5.text-reset{"aria-current" => "page", href: "#"} Log In
-  %a.text-sm-end.nav-link.text-reset.mx-3.mx-sm-5{href: "#"} Sign In
+  %a.text-sm-end.nav-link.text-reset.mx-3.mx-sm-5(href="#")Sign In

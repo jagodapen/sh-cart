@@ -1,0 +1,59 @@
+.shc-icon {
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Home Page */
+#home-page-nav-link:first-child {
+  background-image: url("home-page.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 30px;
+  height: 30px;
+}
+
+#home-logo {
+  background-image: url("shcart-logo.jpg");
+  height: 80px;
+  width: 246px;
+}
+
+#home-myhouse-icon {
+  background-image: url("house.svg");
+}
+
+#home-members-icon {
+  background-image: url("members.svg");
+}
+
+#home-myhouse-icon, #home-members-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.home-card-image img {
+  width: 100px;
+}
+
+/* Products */
+#products-list-container {
+  height: calc( 100vh - 200px);
+}
+
+#products-list {
+  height: calc( 100vh - 220px);
+  overflow-y: scroll;
+}
+
+.edit-icon {
+  background-image: url("edit.svg");
+}
+
+.delete-icon {
+  background-image: url("delete.svg");
+}
+
+.edit-icon, .delete-icon {
+  width: 15px;
+  height: 15px;
+}
