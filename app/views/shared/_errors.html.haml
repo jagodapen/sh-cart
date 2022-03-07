@@ -1,0 +1,3 @@
+- if @product.errors.any?
+  - @product.errors.full_messages.each do |message|
+    %p.alert.alert.alert-danger.mx-5= message

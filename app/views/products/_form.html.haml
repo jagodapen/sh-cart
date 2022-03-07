@@ -1,0 +1,10 @@
+#form-container.bg-light.mx-5
+  = form_for @product do |f|
+    .row.m-2.py-4
+      .col-12.col-sm-8
+        #inputProductName= f.text_field :name, class: "form-control", placeholder: :name
+      .col-12.col-sm-4
+        #inputProductUnit= f.text_field :unit, class: "form-control", placeholder: :unit
+    .ps-4.pb-4
+      = link_to 'Show', @product, class: "btn btn-outline-dark" if @product.id
+      = f.submit 'Save', class: "btn btn-dark me-2", type: "submit"

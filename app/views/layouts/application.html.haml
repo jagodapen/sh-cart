@@ -7,14 +7,18 @@
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
+    = stylesheet_link_tag "custom.css", "data-turbo-track": "reload"
     = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
   %body
 
-    = render 'partials/navbar'
+    = render 'shared/navbar'
 
-    %p.notice= notice
-    %p.alert= alert
+    .mx-5.my-2
+      - if notice
+        %p.notice.alert.alert-success= flash.now[:notice]
+      - if alert
+        %p.notice.alert.alert-success= flash.now[:alert]
 
     = yield
-    
-    = render 'partials/footer'
+
+    = render 'shared/footer'
