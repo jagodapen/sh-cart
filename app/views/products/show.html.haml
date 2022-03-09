@@ -1,7 +1,8 @@
 .bg-light.mx-5
   .d-flex.p-1
+    .px-2.text-muted.fw-light= "[ #{@product.product_type} ]"
     .px-2= @product.name
-    .px-2.flex-grow-1.text-align-start= "(#{@product.unit})"
+    .px-2.flex-grow-1.text-align-start.text-muted.fw-light= "(#{@product.unit})"
     .px-2.mx-2.edit-icon.shc-icon.position-relative= link_to "", edit_product_path(@product), class: "stretched-link"
     .px-2.mx-2.delete-icon.shc-icon.position-relative= link_to "", @product, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "stretched-link"
   %h4.my-3.text-center= "Recipes with " + @product.name
