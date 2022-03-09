@@ -4,7 +4,7 @@
 #products-list-container.d-flex.my-2.mx-5.bg-light.position-relative
   %nav#products-list-navigation.d-flex.flex-column.align-items-start.p-2
     - @product_types.each do |type|
-      %a.list-group-item.list-group-item-action{:href => "#" + product_type_haml_id(type)}= type.titleize
+      %a.list-group-item.list-group-item-action.p-1{:href => "#" + product_type_haml_id(type)}= type.titleize
 
   #products-list.scrollspy.flex-grow-1.p-3(data-bs-offset="0" data-bs-spy="scroll" data-bs-target="#products-list-navigation" tabindex="0")
     - @product_types.each do |type_name|
