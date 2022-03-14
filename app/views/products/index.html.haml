@@ -3,13 +3,13 @@
 
 #products-list-container.d-flex.my-2.mx-5.bg-light.position-relative
   %nav#products-list-navigation.d-flex.flex-column.align-items-start.p-2
-    - @product_types.each do |type|
-      %a.list-group-item.list-group-item-action.p-1{:href => "#" + product_type_haml_id(type)}= type.titleize
+    - @products.group_by{|p| p.product_type}.each do |type, products|
+      %a.list-group-item.list-group-item-action.p-1{:href => "#product_type_#{type}"}= type.titleize
 
   #products-list.scrollspy.flex-grow-1.p-3(data-bs-offset="0" data-bs-spy="scroll" data-bs-target="#products-list-navigation" tabindex="0")
-    - @product_types.each do |type_name|
-      %h4.mt-2{:id => "#{product_type_haml_id(type_name)}"}= type_name.titleize
-      - products_of_type(type_name).each do |product|
+    - @products.group_by{|p| p.product_type}.each do |type, products|
+      %h4.mt-2{:id => "product_type_#{type}"}= type.titleize
+      - products.each do |product|
         .d-flex.align-items-center.list-group-item.list-group-item-action.p-1
           .px-2= link_to product.name, product, class: 'text-dark text-decoration-none'
           .px-2.flex-grow-1.text-align-start.text-muted.fw-light= "(#{product.unit})"
