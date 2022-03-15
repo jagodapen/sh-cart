@@ -1,19 +1,34 @@
-= form_for @shopping_list do |f|
-  - if @shopping_list.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@shopping_list.errors.count, "error")} prohibited this shopping_list from being saved:"
-      %ul
-        - @shopping_list.errors.full_messages.each do |message|
-          %li= message
+-# = form_for @shopping_list do |f|
+-#   - if @shopping_list.errors.any?
+-#     #error_explanation
+-#       %h2= "#{pluralize(@shopping_list.errors.count, "error")} prohibited this shopping_list from being saved:"
+-#       %ul
+-#         - @shopping_list.errors.full_messages.each do |message|
+-#           %li= message
+-#
+-#   .field
+-#     = f.label :name
+-#     = f.text_field :name
+-#   .field
+-#     = f.label :shopping_day
+-#     = f.date_field :shopping_day
+-#   .field
+-#     = f.label :status
+-#     = f.number_field :status
+-#   .actions
+-#     = f.submit 'Save'
 
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :shopping-day
-    = f.date_field :shopping-day
-  .field
-    = f.label :status
-    = f.number_field :status
-  .actions
-    = f.submit 'Save'
+#form-container.bg-light.mx-5
+  = form_for @shopping_list do |f|
+    .row.m-2.py-4
+      .col-12.col-sm-8
+        #inputShoppingListName= f.text_field :name, class: "form-control", placeholder: :name
+      .col-12.col-sm-4
+        #inputShoppingListDate= f.date_field :shopping_day, class: "form-control", placeholder: :shopping_day
+      .col-12.col-sm-6
+
+      .col-12.col-sm-6
+
+    .ps-4.pb-4
+      = link_to 'Show', @shopping_list, class: "btn btn-outline-dark" if @shopping_list.id
+      = f.submit @shopping_list.id ? 'Save' : 'Create', class: "btn btn-dark me-2", type: "submit"

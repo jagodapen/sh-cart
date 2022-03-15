@@ -1,25 +1,19 @@
-%h1 Listing shopping_lists
+.d-grid.gap-2.d-md-block.mx-5
+  %button.btn.btn-dark.me-2.position-relative(type="button")= link_to 'New Shopping List', new_shopping_list_path, class: 'text-light text-decoration-none stretched-link'
 
-%table
-  %thead
-    %tr
-      %th Name
-      %th Shopping-day
-      %th Status
-      %th
-      %th
-      %th
+#shopping-lists-container.d-flex.my-2.mx-5.bg-light.position-relative
+  %nav#shopping-lists-index-navigation.d-flex.flex-column.align-items-start.p-2
+    - @shopping_lists.group_by{|li| li.status}.each do |status, lists|
+      %h4.mt-2= status
+      - lists.each do |list|
+        .d-flex.align-items-center.list-group-item.list-group-item-action.p-1
+          .px-2= list.status==0 ? 'pending-icon-placeholder' : 'done-icon-placeholder'
+          .px-2= link_to list.name, list, class: 'text-dark text-decoration-none'
+          .px-2.flex-grow-1.text-align-start.text-muted.fw-light= "(#{list.shopping_day})"
+          .px-2.mx-2.edit-icon.shc-icon.position-relative= link_to "", edit_shopping_list_path(list), class: "stretched-link"
+          .px-2.mx-2.delete-icon.shc-icon.position-relative= link_to "", list, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "stretched-link"
 
-  %tbody
-    - @shopping_lists.each do |shopping_list|
-      %tr
-        %td= shopping_list.name
-        %td= shopping_list.shopping-day
-        %td= shopping_list.status
-        %td= link_to 'Show', shopping_list
-        %td= link_to 'Edit', edit_shopping_list_path(shopping_list)
-        %td= link_to 'Destroy', shopping_list, method: :delete, data: { confirm: 'Are you sure?' }
+  #shopping-list-products-list.scrollspy.p-3(data-bs-offset="100" data-bs-spy="scroll" data-bs-target="#shopping-lists-index-navigation" tabindex="0")
+    %h4#category-1 List products
 
-%br
-
-= link_to 'New Shopping list', new_shopping_list_path
+.mx-5.my-2= link_to '<<< Back', root_path, class: "text-dark text-decoration-none"

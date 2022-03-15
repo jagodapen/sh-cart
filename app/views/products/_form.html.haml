@@ -7,4 +7,4 @@
         #inputProductUnit= f.text_field :unit, class: "form-control", placeholder: :unit
     .ps-4.pb-4
       = link_to 'Show', @product, class: "btn btn-outline-dark" if @product.id
-      = f.submit 'Save', class: "btn btn-dark me-2", type: "submit"
+      = f.submit @product.id ? 'Save' : 'Create', class: "btn btn-dark me-2", type: "submit"
