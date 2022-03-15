@@ -1,0 +1,25 @@
+%h1 Listing shopping_lists
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Shopping-day
+      %th Status
+      %th
+      %th
+      %th
+
+  %tbody
+    - @shopping_lists.each do |shopping_list|
+      %tr
+        %td= shopping_list.name
+        %td= shopping_list.shopping-day
+        %td= shopping_list.status
+        %td= link_to 'Show', shopping_list
+        %td= link_to 'Edit', edit_shopping_list_path(shopping_list)
+        %td= link_to 'Destroy', shopping_list, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Shopping list', new_shopping_list_path

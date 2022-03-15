@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @shopping_list.name
+%p
+  %b Shopping-day:
+  = @shopping_list.shopping-day
+%p
+  %b Status:
+  = @shopping_list.status
+
+= link_to 'Edit', edit_shopping_list_path(@shopping_list)
+\|
+= link_to 'Back', shopping_lists_path
