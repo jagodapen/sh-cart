@@ -57,3 +57,16 @@
   width: 15px;
   height: 15px;
 }
+
+.pending-icon {
+  background-image: url("pending.svg");
+}
+
+.done-icon {
+  background-image: url("done.svg");
+}
+
+.pending-icon, .done-icon {
+  width: 20px;
+  height: 20px;
+}

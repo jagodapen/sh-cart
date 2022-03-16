@@ -3,17 +3,17 @@
 
 #shopping-lists-container.d-flex.my-2.mx-5.bg-light.position-relative
   %nav#shopping-lists-index-navigation.d-flex.flex-column.align-items-start.p-2
-    - @shopping_lists.group_by{|li| li.status}.each do |status, lists|
+    - @shopping_lists.group_by{|li| li.status}.sort.reverse.each do |status, lists|
       %h4.mt-2= status
       - lists.each do |list|
         .d-flex.align-items-center.list-group-item.list-group-item-action.p-1
-          .px-2= list.status==0 ? 'pending-icon-placeholder' : 'done-icon-placeholder'
+          .px-2.shc-icon{:class => list.status=='pending' ? "pending-icon" : "done-icon"}
+          .px-2.flex-grow-1.text-align-start.text-muted.fw-light= list.shopping_day
           .px-2= link_to list.name, list, class: 'text-dark text-decoration-none'
-          .px-2.flex-grow-1.text-align-start.text-muted.fw-light= "(#{list.shopping_day})"
           .px-2.mx-2.edit-icon.shc-icon.position-relative= link_to "", edit_shopping_list_path(list), class: "stretched-link"
           .px-2.mx-2.delete-icon.shc-icon.position-relative= link_to "", list, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "stretched-link"
 
   #shopping-list-products-list.scrollspy.p-3(data-bs-offset="100" data-bs-spy="scroll" data-bs-target="#shopping-lists-index-navigation" tabindex="0")
-    %h4#category-1 List products
+    %h4#category-1 Products on the list
 
 .mx-5.my-2= link_to '<<< Back', root_path, class: "text-dark text-decoration-none"
