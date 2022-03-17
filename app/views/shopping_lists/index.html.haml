@@ -3,11 +3,11 @@
 
 #shopping-lists-container.d-flex.my-2.mx-5.bg-light.position-relative
   %nav#shopping-lists-index-navigation.d-flex.flex-column.align-items-start.p-2
-    - @shopping_lists.group_by{|li| li.status}.sort.reverse.each do |status, lists|
+    - @shopping_lists.group_by(&:status).sort.reverse.each do |status, lists|
       %h4.mt-2= status
       - lists.each do |list|
         .d-flex.align-items-center.list-group-item.list-group-item-action.p-1
-          .px-2.shc-icon{:class => list.status=='pending' ? "pending-icon" : "done-icon"}
+          .px-2.shc-icon{:class => list.pending? ? "pending-icon" : "done-icon"}
           .px-2.flex-grow-1.text-align-start.text-muted.fw-light= list.shopping_day
           .px-2= link_to list.name, list, class: 'text-dark text-decoration-none'
           .px-2.mx-2.edit-icon.shc-icon.position-relative= link_to "", edit_shopping_list_path(list), class: "stretched-link"

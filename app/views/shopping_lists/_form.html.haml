@@ -2,7 +2,7 @@
   = form_for @shopping_list do |f|
     .row.m-2.py-4
       .col-6.col-sm-2
-        #inputShoppingListStatus= f.select :status, options_for_select(ShoppingList.statuses.keys), {}, class: "form-select"
+        #inputShoppingListStatus= f.select :status, options_for_select(shopping_list_statuses), {}, class: "form-select"
       .col-12.col-sm-6
         #inputShoppingListName= f.text_field :name, class: "form-control", placeholder: :name
       .col-12.col-sm-4
