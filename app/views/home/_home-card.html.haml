@@ -2,4 +2,4 @@
   .card.mx-auto.d-block.w-100
     .home-card-image.shc-icon.my-3= image_tag "home-cards/#{src}"
     .card-body.text-capitalize
-      .card-text= link_to name, "#{name}", class: "text-dark text-decoration-none stretched-link"
+      .card-text= link_to name.to_s.titleize(keep_id_suffix: true), "#{name}", class: "text-dark text-decoration-none stretched-link"
