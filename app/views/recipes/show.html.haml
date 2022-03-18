@@ -1,7 +1,7 @@
 .bg-light.mx-5
   .d-flex.p-1.align-items-center
     .px-2.flex-grow-1.text-center.fs-4= @recipe.name
-    .px-2= @recipe.preparation_time
+    .px-2.mx-2= preparation_time_hours(@recipe.preparation_time) if @recipe.preparation_time
     .px-2.mx-2.edit-icon.shc-icon.position-relative= link_to "", edit_recipe_path(@recipe), class: "stretched-link"
     .px-2.mx-2.delete-icon.shc-icon.position-relative= link_to "", @recipe, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "stretched-link"
   .d-flex.p-1

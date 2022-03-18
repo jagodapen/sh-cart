@@ -1,10 +1,12 @@
 #form-container.bg-light.mx-5
   = form_for @recipe do |f|
     .row.m-2.py-4
-      .col-8
+      .col-6
         #inputShoppingListName= f.text_field :name, class: "form-control", placeholder: :name
-      .col-4
-        #inputShoppingListStatus= f.time_field :preparation_time, class: "form-select"
+      .col-6.d-flex
+        .p-2.text-muted.fw-light.text-nowrap= f.label :preparation_time, "Preparation time:"
+        #inputShoppingListStatus= f.number_field :preparation_time, in: 1.0..300.0, step: 1, class: "form-control"
+        .p-2.text-muted.fw-light minutes
       .col-12.mt-2
         #inputShoppingListDate= f.text_area :description, class: "form-control", placeholder: :description
     .ps-4.pb-4
