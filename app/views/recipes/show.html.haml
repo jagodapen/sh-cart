@@ -1,15 +1,11 @@
-%p#notice= notice
-
-%p
-  %b Name:
-  = @recipe.name
-%p
-  %b Description:
-  = @recipe.description
-%p
-  %b Preparation time:
-  = @recipe.preparation_time
-
-= link_to 'Edit', edit_recipe_path(@recipe)
-\|
-= link_to 'Back', recipes_path
+.bg-light.mx-5
+  .d-flex.p-1.align-items-center
+    .px-2.flex-grow-1.text-center.fs-4= @recipe.name
+    .px-2= @recipe.preparation_time
+    .px-2.mx-2.edit-icon.shc-icon.position-relative= link_to "", edit_recipe_path(@recipe), class: "stretched-link"
+    .px-2.mx-2.delete-icon.shc-icon.position-relative= link_to "", @recipe, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "stretched-link"
+  .d-flex.p-1
+    .px-2.mx-2.flex-grow-1 Products
+    .px-2.mx-2.position-relative IMG
+  .px-2= @recipe.description
+.mx-5.my-2= link_to '<<< Back', recipes_path, class: "text-dark text-decoration-none"

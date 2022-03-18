@@ -1,25 +1,13 @@
-%h1 Listing recipes
+.d-grid.gap-2.d-md-block.mx-5
+  %button.btn.btn-dark.me-2.position-relative(type="button")= link_to 'New Recipe', new_recipe_path, class: 'text-light text-decoration-none stretched-link'
 
-%table
-  %thead
-    %tr
-      %th Name
-      %th Description
-      %th Preparation time
-      %th
-      %th
-      %th
-
-  %tbody
+#recipes-container.my-2.mx-5.bg-light.position-relative
+  .d-flex.flex-column.p-2
     - @recipes.each do |recipe|
-      %tr
-        %td= recipe.name
-        %td= recipe.description
-        %td= recipe.preparation_time
-        %td= link_to 'Show', recipe
-        %td= link_to 'Edit', edit_recipe_path(recipe)
-        %td= link_to 'Destroy', recipe, method: :delete, data: { confirm: 'Are you sure?' }
+      .d-flex.align-items-center.list-group-item.p-1
+        .px-2.mx-2 mini IMG
+        .px-2.flex-grow-1.text-center= link_to recipe.name, recipe, class: 'text-dark text-decoration-none'
+        .px-2.mx-2.edit-icon.shc-icon.position-relative= link_to "", edit_recipe_path(recipe), class: "stretched-link"
+        .px-2.mx-2.delete-icon.shc-icon.position-relative= link_to "", recipe, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "stretched-link"
 
-%br
-
-= link_to 'New Recipe', new_recipe_path
+.mx-5.my-2= link_to '<<< Back', root_path, class: "text-dark text-decoration-none"

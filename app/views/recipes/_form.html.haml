@@ -1,19 +1,12 @@
-= form_for @recipe do |f|
-  - if @recipe.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@recipe.errors.count, "error")} prohibited this recipe from being saved:"
-      %ul
-        - @recipe.errors.full_messages.each do |message|
-          %li= message
-
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :description
-    = f.text_area :description
-  .field
-    = f.label :preparation_time
-    = f.time_field :preparation_time
-  .actions
-    = f.submit 'Save'
+#form-container.bg-light.mx-5
+  = form_for @recipe do |f|
+    .row.m-2.py-4
+      .col-8
+        #inputShoppingListName= f.text_field :name, class: "form-control", placeholder: :name
+      .col-4
+        #inputShoppingListStatus= f.time_field :preparation_time, class: "form-select"
+      .col-12.mt-2
+        #inputShoppingListDate= f.text_area :description, class: "form-control", placeholder: :description
+    .ps-4.pb-4
+      = link_to 'Show', @recipe, class: "btn btn-outline-dark" if @recipe.id
+      = f.submit @recipe.id ? 'Save' : 'Create', class: "btn btn-dark me-2", type: "submit"
