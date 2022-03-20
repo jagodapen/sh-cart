@@ -70,3 +70,16 @@
   width: 20px;
   height: 20px;
 }
+
+.product-unit-box {
+  width: 100px;
+}
+
+#recipe-products-list-container {
+  height: 500px;
+}
+
+#recipe-products-list {
+  height: 385px;
+  overflow-y: scroll;
+}

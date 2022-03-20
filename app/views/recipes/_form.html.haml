@@ -1,14 +1,32 @@
 #form-container.bg-light.mx-5
   = form_for @recipe do |f|
-    .row.m-2.py-4
-      .col-6
-        #inputShoppingListName= f.text_field :name, class: "form-control", placeholder: :name
-      .col-6.d-flex
+    .row.m-2.py-2
+      .col-12.col-md-6.d-flex.mt-2
+        .p-2.text-muted.fw-light= f.label :name
+        #inputRecipeName.flex-grow-1= f.text_field :name, class: "form-control", placeholder: :name
+      .col-12.col-md-6.d-flex.mt-2
         .p-2.text-muted.fw-light.text-nowrap= f.label :preparation_time, "Preparation time:"
-        #inputShoppingListStatus= f.number_field :preparation_time, in: 1.0..300.0, step: 1, class: "form-control"
+        #inputRecipePreparationTime.flex-grow-1= f.number_field :preparation_time, in: 1.0..300.0, step: 1, class: "form-control"
         .p-2.text-muted.fw-light minutes
-      .col-12.mt-2
-        #inputShoppingListDate= f.text_area :description, class: "form-control", placeholder: :description
+      #recipe-products-list-container.col-12.col-md-6.mt-2.position-relative
+        .p-2.text-muted.fw-light Ingridients:
+        %nav#selectRecipeProducts.navbar.navbar-light.bg-light
+          %ul.nav.nav-pills
+            - all_products.group_by(&:product_type).each do |type, prod|
+              %li.nav-item
+                %a.btn.btn-outline-dark.btn-sm{:href => "#product_type_#{type}"}= type.titleize
+        #recipe-products-list.scrollspy(data-bs-offset="0" data-bs-spy="scroll" data-bs-target="#selectRecipeProducts" tabindex="0")
+          - all_products.group_by(&:product_type).each do |type, prod|
+            .p-2{:id => "product_type_#{type}"}= type.titleize
+
+            = f.collection_check_boxes(:product_ids, prod, :id, :name) do |cb|
+              .d-flex.align-items-center.list-group-item.list-group-item-action.p-1
+                .px-2= cb.check_box
+                .px-2.flex-grow-1.text-align-start.text-muted.fw-light= cb.label
+
+      .col-12.col-md-6.mt-2
+        .p-2.text-muted.fw-light= f.label :description, "Description:"
+        #inputRecipeDescription= f.text_area :description, rows: 20, class: "form-control"
     .ps-4.pb-4
       = link_to 'Show', @recipe, class: "btn btn-outline-dark" if @recipe.id
       = f.submit @recipe.id ? 'Save' : 'Create', class: "btn btn-dark me-2", type: "submit"

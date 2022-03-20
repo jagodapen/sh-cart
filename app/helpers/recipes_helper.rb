@@ -6,4 +6,12 @@ module RecipesHelper
     @preparation_time_hours = minutes>59 ? hours + min : min
   end
 
+  def recipe_product(id)
+    @recipe_product = Product.find(id)
+  end
+
+  def all_products
+    @all_products = Product.all
+  end
+
 end
