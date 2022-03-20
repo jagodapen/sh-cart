@@ -16,14 +16,12 @@
               %li.nav-item
                 %a.btn.btn-outline-dark.btn-sm{:href => "#product_type_#{type}"}= type.titleize
         #recipe-products-list.scrollspy(data-bs-offset="0" data-bs-spy="scroll" data-bs-target="#selectRecipeProducts" tabindex="0")
-          - all_products.group_by(&:product_type).each do |type, prod|
+          - grouped_products.each do |type, products|
             .p-2{:id => "product_type_#{type}"}= type.titleize
-
-            = f.collection_check_boxes(:product_ids, prod, :id, :name) do |cb|
+            = f.collection_check_boxes(:product_ids, products, :id, :name) do |cb|
               .d-flex.align-items-center.list-group-item.list-group-item-action.p-1
                 .px-2= cb.check_box
                 .px-2.flex-grow-1.text-align-start.text-muted.fw-light= cb.label
-
       .col-12.col-md-6.mt-2
         .p-2.text-muted.fw-light= f.label :description, "Description:"
         #inputRecipeDescription= f.text_area :description, rows: 20, class: "form-control"
