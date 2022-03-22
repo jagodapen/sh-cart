@@ -18,10 +18,10 @@ gem "puma", "~> 5.0"
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem "jsbundling-rails"
 
-# Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
-gem "turbo-rails", '~> 1.0.0'
+# Hotwire"s SPA-like page accelerator [https://turbo.hotwired.dev]
+gem "turbo-rails", "~> 1.0.0"
 
-# Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
+# Hotwire"s modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"
 
 # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
@@ -68,8 +68,9 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+  gem "pry-rails"
 end
 
-gem 'haml'
+gem "haml"
 gem "haml-rails", "~> 2.0"
-gem 'devise'
+gem "devise"
