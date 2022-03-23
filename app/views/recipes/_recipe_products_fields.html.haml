@@ -1,0 +1,5 @@
+%fieldset
+  = f.label :quantity, "Quantity"
+  = f.number_field :quantity
+  = f.hidden_field :_destroy
+  = link_to "remove", '#', class: "remove_fields"

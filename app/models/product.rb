@@ -1,7 +1,7 @@
 class Product < ApplicationRecord
   has_many :recipe_products
   has_many :recipes, through: :recipe_products
-  
+
   validates :name, presence: true, length: { minimum: 2, maximum: 50 }
   validates :unit, presence: true, length: { maximum: 15 }
 

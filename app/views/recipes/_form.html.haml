@@ -8,21 +8,27 @@
         .p-2.text-muted.fw-light.text-nowrap= f.label :preparation_time, "Preparation time:"
         #inputRecipePreparationTime.flex-grow-1= f.number_field :preparation_time, in: 1.0..300.0, step: 1, class: "form-control"
         .p-2.text-muted.fw-light minutes
-      #recipe-products-list-container.col-12.col-md-6.mt-2.position-relative
-        .p-2.text-muted.fw-light Ingridients:
-        %nav#selectRecipeProducts.navbar.navbar-light.bg-light
-          %ul.nav.nav-pills
-            - all_products.group_by(&:product_type).each do |type, prod|
-              %li.nav-item
-                %a.btn.btn-outline-dark.btn-sm{:href => "#product_type_#{type}"}= type.titleize
-        #recipe-products-list.scrollspy(data-bs-offset="0" data-bs-spy="scroll" data-bs-target="#selectRecipeProducts" tabindex="0")
-          - grouped_products.each do |type, products|
-            .p-2{:id => "product_type_#{type}"}= type.titleize
-            = f.collection_check_boxes(:product_ids, products, :id, :name) do |cb|
-              .d-flex.align-items-center.list-group-item.list-group-item-action.p-1
-                .px-2= cb.check_box
-                .px-2.flex-grow-1.text-align-start.text-muted.fw-light= cb.label
-                -# .px-2= cb.number_field :quantity
+      -# #recipe-products-list-container.col-12.col-md-6.mt-2.position-relative
+        -# .p-2.text-muted.fw-light Ingridients:
+        -# %nav#selectRecipeProducts.navbar.navbar-light.bg-light
+        -#   %ul.nav.nav-pills
+        -#     - all_products.group_by(&:product_type).each do |type, prod|
+        -#       %li.nav-item
+        -#         %a.btn.btn-outline-dark.btn-sm{:href => "#product_type_#{type}"}= type.titleize
+        -# #recipe-products-list.scrollspy(data-bs-offset="0" data-bs-spy="scroll" data-bs-target="#selectRecipeProducts" tabindex="0")
+        -#   - grouped_products.each do |type, products|
+        -#     .p-2{:id => "product_type_#{type}"}= type.titleize
+        -#
+        -#     = f.collection_check_boxes(:product_ids, products, :id, :name) do |cb|
+        -#       .d-flex.align-items-center.list-group-item.list-group-item-action.p-1
+        -#         .px-2= cb.check_box
+        -#         .px-2.flex-grow-1.text-align-start.text-muted.fw-light= cb.label
+      .col-12.col-md-6.mt-2
+        = f.fields_for :recipe_products do |f|
+          = render 'recipe_products_fields', f: f
+
+          = link_to_add_fields "Add Quantity", f, :recipe_products
+
       .col-12.col-md-6.mt-2
         .p-2.text-muted.fw-light= f.label :description, "Description:"
         #inputRecipeDescription= f.text_area :description, rows: 20, class: "form-control"
