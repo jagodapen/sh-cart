@@ -1,0 +1,3 @@
+%tr.px-2
+  %td.px-2= f.select :product_id, options_from_collection_for_select(all_products, :id, :name), {}, {class: "form-select"}
+  %td.px-2= f.number_field :quantity, in: 1..1000, step: 1, class: "form-control"

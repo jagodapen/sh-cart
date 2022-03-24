@@ -23,9 +23,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_18_121139) do
   end
 
   create_table "recipe_products", force: :cascade do |t|
+    t.integer "quantity"
     t.integer "recipe_id"
     t.integer "product_id"
-    t.integer "quantity"
   end
 
   create_table "recipes", force: :cascade do |t|

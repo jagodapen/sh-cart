@@ -14,7 +14,7 @@ class RecipesController < ApplicationController
   # GET /recipes/new
   def new
     @recipe = Recipe.new
-    3.times { @recipe.products.build }
+    @recipe.recipe_products.build
   end
 
   # GET /recipes/1/edit
@@ -23,7 +23,7 @@ class RecipesController < ApplicationController
 
   # POST /recipes or /recipes.json
   def create
-    debugger
+    # debugger
     @recipe = Recipe.new(recipe_params)
 
     respond_to do |format|
