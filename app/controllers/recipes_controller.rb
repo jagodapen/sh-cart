@@ -14,7 +14,7 @@ class RecipesController < ApplicationController
   # GET /recipes/new
   def new
     @recipe = Recipe.new
-    # @recipe.recipe_products.build
+    3.times { @recipe.products.build }
   end
 
   # GET /recipes/1/edit
@@ -68,11 +68,7 @@ class RecipesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def recipe_params
-      params.require(:recipe).permit(:name, :description, :preparation_time, product_ids: [],
-                                      recipe_products_attributes: [:product_id, :quantity])
+      params.require(:recipe).permit(:name, :description, :preparation_time,
+                                      recipe_products_attributes: [:id, :recipe_id, :product_id, :quantity])
     end
-    #
-    # def recipe_products_params
-    #   params.require(:recipe_product).permit(:product_id, :recipe_id, product_attributes: [:quantity])
-    # end
 end

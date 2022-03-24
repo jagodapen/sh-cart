@@ -23,15 +23,23 @@
         -#       .d-flex.align-items-center.list-group-item.list-group-item-action.p-1
         -#         .px-2= cb.check_box
         -#         .px-2.flex-grow-1.text-align-start.text-muted.fw-light= cb.label
-      .col-12.col-md-6.mt-2
-        = f.fields_for :recipe_products do |f|
-          = render 'recipe_products_fields', f: f
-
-          = link_to_add_fields "Add Quantity", f, :recipe_products
+      .col-12.col-md-6.mt-2.row
+        = f.fields_for :recipe_product do |f|
+          %table.table
+            %thead
+              %tr
+                %th.px-2.col-8.text-align-start.text-muted.fw-light= f.label :product_id, "Product"
+                %th.px-2.col-4.text-align-start.text-muted.fw-light= f.label :quantity, "Quantity"
+            %tbody
+              %tr.px-2
+                %td.px-2= f.select(:product_id, options_from_collection_for_select(all_products, :id, :name))
+                %td.px-2= f.number_field :quantity, in: 1..1000, step: 1, class: "form-control"
+        -# = link_to_add_fields "Add Quantity", f, :recipe_products
 
       .col-12.col-md-6.mt-2
         .p-2.text-muted.fw-light= f.label :description, "Description:"
         #inputRecipeDescription= f.text_area :description, rows: 20, class: "form-control"
     .ps-4.pb-4
       = link_to 'Show', @recipe, class: "btn btn-outline-dark" if @recipe.id
-      = f.submit @recipe.id ? 'Save' : 'Create', class: "btn btn-dark me-2", type: "submit"
+      = f.submit 'Save', class: "btn btn-dark me-2", type: "submit"
+      -# = f.submit @recipe.id ? 'Save' : 'Create', class: "btn btn-dark me-2", type: "submit"
