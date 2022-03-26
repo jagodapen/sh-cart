@@ -14,7 +14,7 @@ class RecipesController < ApplicationController
   # GET /recipes/new
   def new
     @recipe = Recipe.new
-    @recipe.recipe_products.build
+    5.times { @recipe.recipe_products.build }
   end
 
   # GET /recipes/1/edit

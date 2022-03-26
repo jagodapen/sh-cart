@@ -9,15 +9,15 @@
         #inputRecipePreparationTime.flex-grow-1= f.number_field :preparation_time, in: 1.0..300.0, step: 1, class: "form-control"
         .p-2.text-muted.fw-light minutes
       .col-12.col-md-6.mt-2.row
-        = f.fields_for :recipe_products do |f|
-          %table.table
-            %thead
-              %tr
-                %th.px-2.col-8.text-align-start.text-muted.fw-light Product
-                %th.px-2.col-4.text-align-start.text-muted.fw-light Quantity
-            %tbody
-              = render 'recipe_product_fields', f: f
-          -# = link_to_add_fields "Add Product", f, :recipe_products
+        %table.table
+          %thead
+            %tr
+              %th.px-2.col-8.text-align-start.text-muted.fw-light Product
+              %th.px-2.col-4.text-align-start.text-muted.fw-light Quantity
+          %tbody
+            = f.fields_for :recipe_products do |builder|
+              = render 'recipe_product_fields', f: builder
+        = link_to_add_fields "Add Product", f, :recipe_products
 
       .col-12.col-md-6.mt-2
         .p-2.text-muted.fw-light= f.label :description, "Description:"
