@@ -1,23 +1,26 @@
 #form-container.bg-light.mx-5
-  = form_with model: @recipe do |f|
+  = form_with model: @recipe, data: { controller: 'nested-form', nested_form_wrapper_selector_value: '.nested-form-wrapper' }  do |f|
     .row.m-2.py-2
       .col-12.col-md-6.d-flex.mt-2
-        .p-2.text-muted.fw-light= f.label :name
+        .pe-2.py-2.text-muted.fw-light.text-start= f.label :name, "Name:"
         #inputRecipeName.flex-grow-1= f.text_field :name, class: "form-control", placeholder: :name
       .col-12.col-md-6.d-flex.mt-2
         .p-2.text-muted.fw-light.text-nowrap= f.label :preparation_time, "Preparation time:"
         #inputRecipePreparationTime.flex-grow-1= f.number_field :preparation_time, in: 1.0..300.0, step: 1, class: "form-control"
         .p-2.text-muted.fw-light minutes
+    .row.m-2.py-2
       .col-12.col-md-6.mt-2.row
-        %table.table
-          %thead
-            %tr
-              %th.px-2.col-8.text-align-start.text-muted.fw-light Product
-              %th.px-2.col-4.text-align-start.text-muted.fw-light Quantity
-          %tbody
-            = f.fields_for :recipe_products do |builder|
-              = render 'recipe_product_fields', f: builder
-        = link_to_add_fields "Add Product", f, :recipe_products
+        .p-2.text-muted.fw-light Ingridients:
+
+        %template{"data-nested-form-target" => "template"}
+          = f.fields_for :recipe_products, RecipeProduct.new, child_index: 'NEW_RECORD' do |builder|
+            = render 'recipe_product_fields', f: builder
+
+        = f.fields_for :recipe_products do |builder|
+          = render 'recipe_product_fields', f: builder
+
+        %div{"data-nested-form-target" => "target"}
+        %button.btn.btn-outline-dark.me-2{"data-action" => "nested-form#add", type: "button"} Add Product
 
       .col-12.col-md-6.mt-2
         .p-2.text-muted.fw-light= f.label :description, "Description:"
