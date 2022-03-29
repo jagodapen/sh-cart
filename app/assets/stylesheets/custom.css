@@ -75,11 +75,11 @@
   width: 100px;
 }
 
-#recipe-products-list-container {
-  height: 500px;
+#sl-products-list-container {
+  height: 200px;
 }
 
-#recipe-products-list {
-  height: 385px;
+#sl-products-list {
+  height: 185px;
   overflow-y: scroll;
 }

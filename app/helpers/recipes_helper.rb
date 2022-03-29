@@ -10,12 +10,4 @@ module RecipesHelper
     @recipe_product = Product.find(id)
   end
 
-  def all_products
-    @all_products = Product.all
-  end
-
-  def grouped_products
-    @grouped_products = Product.all.group_by(&:product_type)
-  end
-
 end

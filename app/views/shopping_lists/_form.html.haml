@@ -1,16 +1,25 @@
-#form-container.bg-light.mx-5
-  = form_for @shopping_list do |f|
+.form-container.bg-light.mx-5
+  = form_with model: @shopping_list, data: { controller: 'nested-form', nested_form_wrapper_selector_value: '.nested-form-wrapper' } do |f|
     .row.m-2.py-4
       .col-6.col-sm-2
-        #inputShoppingListStatus= f.select :status, options_for_select(shopping_list_statuses), {}, class: "form-select"
+        #input-shopping-list-status= f.select :status, options_for_select(shopping_list_statuses), {}, class: "form-select"
       .col-12.col-sm-6
-        #inputShoppingListName= f.text_field :name, class: "form-control", placeholder: :name
+        #input-shopping-list-name= f.text_field :name, class: "form-control", placeholder: :name
       .col-12.col-sm-4
-        #inputShoppingListDate= f.date_field :shopping_day, class: "form-control", placeholder: :shopping_day
-      .col-12.col-sm-6
-        List of all products
-      .col-12.col-sm-6
-        Added products
+        #input-shopping-list-date= f.date_field :shopping_day, class: "form-control", placeholder: :shopping_day
+
+      #sl-products-list-container.position-relative.col-12
+        .p-2.text-muted.fw-light Products:
+        %template{"data-nested-form-target" => "template"}
+          = f.fields_for :shopping_list_products, ShoppingListProduct.new, child_index: 'NEW_RECORD' do |builder|
+            = render 'shopping_list_product_fields', f: builder
+
+        = f.fields_for :shopping_list_products do |builder|
+          = render 'shopping_list_product_fields', f: builder
+
+        %div{"data-nested-form-target" => "target"}
+        %button.btn.btn-outline-dark.me-2{"data-action" => "nested-form#add", type: "button"} Add Product
+
     .ps-4.pb-4
       = link_to 'Show', @shopping_list, class: "btn btn-outline-dark" if @shopping_list.id
       = f.submit @shopping_list.id ? 'Save' : 'Create', class: "btn btn-dark me-2", type: "submit"

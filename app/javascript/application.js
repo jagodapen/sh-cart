@@ -3,7 +3,6 @@ import "@hotwired/turbo-rails"
 import "./src/jquery"
 import "./src/jquery-ui"
 import "./controllers"
-// import "./custom/recipes"
 import * as bootstrap from "bootstrap"
 
 
