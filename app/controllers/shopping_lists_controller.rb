@@ -15,10 +15,12 @@ class ShoppingListsController < ApplicationController
   def new
     @shopping_list = ShoppingList.new
     @shopping_list.shopping_list_products.build
+    @shopping_list_product = ShoppingListProduct.new
   end
 
   # GET /shopping_lists/1/edit
   def edit
+    @shopping_list_product = ShoppingListProduct.new
   end
 
   # POST /shopping_lists or /shopping_lists.json

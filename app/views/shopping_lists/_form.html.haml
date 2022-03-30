@@ -2,7 +2,7 @@
   = form_with model: @shopping_list, data: { controller: 'nested-form', nested_form_wrapper_selector_value: '.nested-form-wrapper' } do |f|
     .row.m-2.py-4
       .col-6.col-sm-2
-        #input-shopping-list-status= f.select :status, options_for_select(shopping_list_statuses), {}, class: "form-select"
+        #input-shopping-list-status= f.select :status, options_for_select(shopping_list_statuses, f.object.status), {}, class: "form-select"
       .col-12.col-sm-6
         #input-shopping-list-name= f.text_field :name, class: "form-control", placeholder: :name
       .col-12.col-sm-4
@@ -11,7 +11,7 @@
       #sl-products-list-container.position-relative.col-12
         .p-2.text-muted.fw-light Products:
         %template{"data-nested-form-target" => "template"}
-          = f.fields_for :shopping_list_products, ShoppingListProduct.new, child_index: 'NEW_RECORD' do |builder|
+          = f.fields_for :shopping_list_products, @shopping_list_product, child_index: 'NEW_RECORD' do |builder|
             = render 'shopping_list_product_fields', f: builder
 
         = f.fields_for :shopping_list_products do |builder|

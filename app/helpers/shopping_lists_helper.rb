@@ -5,7 +5,7 @@ module ShoppingListsHelper
   end
 
   def product(id)
-    @product = Product.find(id)
+    Product.find(id)
   end
 
 end

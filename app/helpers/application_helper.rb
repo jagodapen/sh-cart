@@ -1,11 +1,11 @@
 module ApplicationHelper
 
   def all_products
-    @all_products = Product.all
+    Product.all
   end
 
   def grouped_products
-    @grouped_products = Product.all.group_by(&:product_type)
+    Product.all.group_by(&:product_type)
   end
 
   def add_object_link(name, form, object, partial, where)

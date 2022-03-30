@@ -13,7 +13,7 @@
         .p-2.text-muted.fw-light Ingridients:
 
         %template{"data-nested-form-target" => "template"}
-          = f.fields_for :recipe_products, RecipeProduct.new, child_index: 'NEW_RECORD' do |builder|
+          = f.fields_for :recipe_products, @recipe_product, child_index: 'NEW_RECORD' do |builder|
             = render 'recipe_product_fields', f: builder
 
         = f.fields_for :recipe_products do |builder|
