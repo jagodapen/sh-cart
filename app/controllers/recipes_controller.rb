@@ -25,7 +25,6 @@ class RecipesController < ApplicationController
 
   # POST /recipes or /recipes.json
   def create
-    # debugger
     @recipe = Recipe.new(recipe_params)
 
     respond_to do |format|
