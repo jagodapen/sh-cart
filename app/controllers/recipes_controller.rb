@@ -1,6 +1,7 @@
 class RecipesController < ApplicationController
   before_action :set_recipe, only: %i[ show edit update destroy ]
-
+  after_save FetchProductCalories
+  
   # GET /recipes or /recipes.json
   def index
     @recipes = Recipe.all
@@ -70,4 +71,5 @@ class RecipesController < ApplicationController
       params.require(:recipe).permit(:name, :description, :preparation_time,
                                       recipe_products_attributes: [:id, :recipe_id, :product_id, :quantity, :_destroy])
     end
+
 end

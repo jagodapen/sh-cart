@@ -60,6 +60,10 @@ class ApiClient
     @product["fields"]["nf_serving_weight_grams"]
   end
 
+  def unit
+    @product["fields"]["nf_serving_size_unit"]
+  end
+
   def full_name
     @product["fields"]["item_name"]
   end
