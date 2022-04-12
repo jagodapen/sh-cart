@@ -15,10 +15,12 @@ class RecipesController < ApplicationController
   def new
     @recipe = Recipe.new
     5.times { @recipe.recipe_products.build }
+    @recipe_product = RecipeProduct.new
   end
 
   # GET /recipes/1/edit
   def edit
+    @recipe_product = RecipeProduct.new
   end
 
   # POST /recipes or /recipes.json

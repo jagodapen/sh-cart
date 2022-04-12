@@ -3,11 +3,11 @@
 
 #products-list-container.d-flex.my-2.mx-5.bg-light.position-relative
   %nav#products-list-navigation.d-flex.flex-column.align-items-start.p-2
-    - @products.group_by{|p| p.product_type}.each do |type, products|
+    - grouped_products.each do |type, products|
       %a.list-group-item.list-group-item-action.p-1{:href => "#product_type_#{type}"}= type.titleize
 
   #products-list.scrollspy.flex-grow-1.p-3(data-bs-offset="0" data-bs-spy="scroll" data-bs-target="#products-list-navigation" tabindex="0")
-    - @products.group_by{|p| p.product_type}.each do |type, products|
+    - grouped_products.each do |type, products|
       %h4.mt-2{:id => "product_type_#{type}"}= type.titleize
       - products.each do |product|
         .d-flex.align-items-center.list-group-item.list-group-item-action.p-1

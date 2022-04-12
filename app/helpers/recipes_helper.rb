@@ -9,13 +9,5 @@ module RecipesHelper
   def recipe_product(id)
     Product.find(id)
   end
-
-  def all_products
-    Product.all
-  end
-
-  def grouped_products
-    Product.all.group_by(&:product_type)
-  end
-
+  
 end

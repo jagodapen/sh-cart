@@ -4,4 +4,8 @@ module ShoppingListsHelper
     @shopping_list_statuses ||= ShoppingList.statuses.keys
   end
 
+  def product(id)
+    Product.find(id)
+  end
+
 end
