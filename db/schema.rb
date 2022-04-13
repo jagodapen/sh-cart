@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema[7.0].define(version: 2022_04_06_130520) do
+=======
+ActiveRecord::Schema[7.0].define(version: 2022_03_28_102832) do
+>>>>>>> 2a52c40a636fe7754a878371c4f6b7b974593f8d
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -43,6 +47,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_06_130520) do
     t.datetime "updated_at", null: false
     t.integer "preparation_time"
     t.float "calories"
+  end
+
+  create_table "shopping_list_products", force: :cascade do |t|
+    t.bigint "shopping_list_id"
+    t.bigint "product_id"
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_shopping_list_products_on_product_id"
+    t.index ["shopping_list_id"], name: "index_shopping_list_products_on_shopping_list_id"
   end
 
   create_table "shopping_list_products", force: :cascade do |t|

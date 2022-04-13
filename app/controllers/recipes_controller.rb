@@ -1,7 +1,7 @@
 class RecipesController < ApplicationController
   before_action :set_recipe, only: %i[ show edit update destroy ]
-  after_save FetchProductCalories
-  
+  after_action :fetch_product_calories, only: %i[ create update ]
+
   # GET /recipes or /recipes.json
   def index
     @recipes = Recipe.all
@@ -16,10 +16,12 @@ class RecipesController < ApplicationController
   def new
     @recipe = Recipe.new
     5.times { @recipe.recipe_products.build }
+    @recipe_product = RecipeProduct.new
   end
 
   # GET /recipes/1/edit
   def edit
+    @recipe_product = RecipeProduct.new
   end
 
   # POST /recipes or /recipes.json
@@ -72,4 +74,15 @@ class RecipesController < ApplicationController
                                       recipe_products_attributes: [:id, :recipe_id, :product_id, :quantity, :_destroy])
     end
 
+    def fetch_product_calories
+      @recipe.products.each do |product|
+        if !!(ProductCalories.exists?(product.id))
+          nutritionix_product = Nutritionix::ApiClient.new("#{product.name}")
+          ProductCalories.create(product_id: product.id,
+                              calories: nutritionix_product.calories,
+                              unit: nutritionix_product.unit,
+                              quantity: nutritionix_product.grams)
+        end
+      end
+    end
 end

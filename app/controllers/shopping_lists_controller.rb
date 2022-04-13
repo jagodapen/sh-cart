@@ -8,15 +8,19 @@ class ShoppingListsController < ApplicationController
 
   # GET /shopping_lists/1 or /shopping_lists/1.json
   def show
+    @shopping_list_products = ShoppingListProduct.where(shopping_list_id: @shopping_list)
   end
 
   # GET /shopping_lists/new
   def new
     @shopping_list = ShoppingList.new
+    @shopping_list.shopping_list_products.build
+    @shopping_list_product = ShoppingListProduct.new
   end
 
   # GET /shopping_lists/1/edit
   def edit
+    @shopping_list_product = ShoppingListProduct.new
   end
 
   # POST /shopping_lists or /shopping_lists.json
@@ -65,6 +69,7 @@ class ShoppingListsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def shopping_list_params
-      params.require(:shopping_list).permit(:name, :shopping_day, :status)
+      params.require(:shopping_list).permit(:name, :shopping_day, :status,
+                                            shopping_list_products_attributes: [:id, :shopping_list_id, :product_id, :quantity, :_destroy])
     end
 end
