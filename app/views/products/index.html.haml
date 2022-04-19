@@ -11,8 +11,8 @@
       %h4.mt-2{:id => "product_type_#{type}"}= type.titleize
       - products.each do |product|
         .d-flex.align-items-center.list-group-item.list-group-item-action.p-1
-          .px-2= link_to product.name, product, class: 'text-dark text-decoration-none'
-          .px-2.flex-grow-1.text-align-start.text-muted.fw-light= "(#{product.unit})"
+          .px-2.flex-grow-1= link_to product.name, product, class: 'text-dark text-decoration-none'
+          .px-2.text-align-start.text-muted.fw-light= product&.product_calories ? "(#{product_calories(product).calories} kcal in 1 #{product.unit})" : "(#{product.unit})"
           .px-2.mx-2.edit-icon.shc-icon.position-relative= link_to "", edit_product_path(product), class: "stretched-link"
           .px-2.mx-2.delete-icon.shc-icon.position-relative= link_to "", product, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "stretched-link"
 

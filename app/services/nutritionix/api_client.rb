@@ -46,10 +46,10 @@ class ApiClient
   base_uri "https://api.nutritionix.com"
 
   def initialize(product)
-    api_key = Rails.application.credentials.dig(:nutritionix, :api_key)
-    app_id = Rails.application.credentials.dig(:nutritionix, :app_id)
-    response = HTTParty.get("https://api.nutritionix.com/v1_1/search/#{product.parameterize.underscore}?results=0:2&fields=item_name,brand_name,item_id,nf_calories,nf_serving_weight_grams&appId=#{app_id}&appKey=#{api_key}")
-    @product = response["hits"][0]
+    @api_key = Rails.application.credentials.dig(:nutritionix, :api_key)
+    @app_id = Rails.application.credentials.dig(:nutritionix, :app_id)
+    response = HTTParty.get("https://api.nutritionix.com/v1_1/search/#{product.parameterize.underscore}?results=0:2&fields=item_name,brand_name,item_id,nf_calories,nf_serving_weight_grams&appId=#{@app_id}&appKey=#{@api_key}")
+    @product = response["hits"]&.first
   end
 
   def calories

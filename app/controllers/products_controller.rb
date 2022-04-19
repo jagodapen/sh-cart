@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy ]
+  after_action :fetch_product_calories, only: %i[ create update ]
 
   # GET /products or /products.json
   def index
@@ -68,4 +69,13 @@ class ProductsController < ApplicationController
     def product_params
       params.require(:product).permit(:name, :unit, :product_type)
     end
+
+    def fetch_product_calories
+      nutritionix_product = Nutritionix::ApiClient.new("#{@product.name}")
+      ProductCalories.create(product_id: @product.id,
+                          calories: nutritionix_product.calories,
+                          unit: nutritionix_product.unit,
+                          quantity: nutritionix_product.grams)
+    end
+
 end

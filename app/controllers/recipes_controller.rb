@@ -1,7 +1,6 @@
 class RecipesController < ApplicationController
   before_action :set_recipe, only: %i[ show edit update destroy ]
-  after_action :fetch_product_calories, only: %i[ create update ]
-
+  after_action :calculate_recipe_product_calories, only: %i[ create update ]
   # GET /recipes or /recipes.json
   def index
     @recipes = Recipe.all
@@ -71,17 +70,16 @@ class RecipesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def recipe_params
       params.require(:recipe).permit(:name, :description, :preparation_time,
-                                      recipe_products_attributes: [:id, :recipe_id, :product_id, :quantity, :_destroy])
+                                      recipe_products_attributes: [:id, :recipe_id, :product_id, :quantity, :calories, :_destroy])
     end
 
-    def fetch_product_calories
-      @recipe.products.each do |product|
-        if !!(ProductCalories.exists?(product.id))
-          nutritionix_product = Nutritionix::ApiClient.new("#{product.name}")
-          ProductCalories.create(product_id: product.id,
-                              calories: nutritionix_product.calories,
-                              unit: nutritionix_product.unit,
-                              quantity: nutritionix_product.grams)
+    def calculate_recipe_product_calories
+      # debugger
+      @recipe.recipe_products.each do |rp|
+        if ProductCalories.exists?(product_id: rp.product_id)
+          calories_of_one = ProductCalories.find_by(product_id: rp.product_id)&.calories
+          calculated_calories = calories_of_one * rp.quantity
+          rp.update(calories: calculated_calories)
         end
       end
     end
