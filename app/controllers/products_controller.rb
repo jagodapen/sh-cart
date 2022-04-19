@@ -71,11 +71,14 @@ class ProductsController < ApplicationController
     end
 
     def fetch_product_calories
-      nutritionix_product = Nutritionix::ApiClient.new("#{@product.name}")
-      ProductCalories.create(product_id: @product.id,
-                          calories: nutritionix_product.calories,
-                          unit: nutritionix_product.unit,
-                          quantity: nutritionix_product.grams)
+      nutritionix_product = Nutritionix::ApiClient.new
+      product_info = nutritionix_product.get_product_data("#{@product.name}")
+      if product_info.present?
+        ProductCalories.create(product_id: @product.id,
+                            calories: product_info.calories,
+                            unit: product_info.unit,
+                            quantity: product_info.grams)
+      end
     end
 
 end

@@ -45,27 +45,30 @@ class ApiClient
   format :json
   base_uri "https://api.nutritionix.com"
 
-  def initialize(product)
+  def initialize
     @api_key = Rails.application.credentials.dig(:nutritionix, :api_key)
     @app_id = Rails.application.credentials.dig(:nutritionix, :app_id)
+  end
+
+  def get_product_data(product)
     response = HTTParty.get("https://api.nutritionix.com/v1_1/search/#{product.parameterize.underscore}?results=0:2&fields=item_name,brand_name,item_id,nf_calories,nf_serving_weight_grams&appId=#{@app_id}&appKey=#{@api_key}")
-    @product = response["hits"]&.first
+    @product = response.dig("hits")&.first
   end
 
   def calories
-    @product["fields"]["nf_calories"]
+    @product.dig("fields", "nf_calories")
   end
 
   def grams
-    @product["fields"]["nf_serving_weight_grams"]
+    @product.dig("fields", "nf_serving_weight_grams")
   end
 
   def unit
-    @product["fields"]["nf_serving_size_unit"]
+    @product.dig("fields", "nf_serving_size_unit")
   end
 
   def full_name
-    @product["fields"]["item_name"]
+    @product.dig("fields", "item_name")
   end
 end
 
