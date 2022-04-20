@@ -52,11 +52,11 @@ class ApiClient
 
   def get_product_data(product)
     response = HTTParty.get("https://api.nutritionix.com/v1_1/search/#{product.parameterize.underscore}?results=0:2&fields=item_name,brand_name,item_id,nf_calories,nf_serving_weight_grams&appId=#{@app_id}&appKey=#{@api_key}")
-    @product = response.dig("hits")&.first
+    @product = response.dig("hits")&.first.dig("fields")
   end
 
   def calories
-    @product.dig("fields", "nf_calories")
+    self.dig("nf_calories")
   end
 
   def grams

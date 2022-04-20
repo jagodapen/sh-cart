@@ -75,9 +75,9 @@ class ProductsController < ApplicationController
       product_info = nutritionix_product.get_product_data("#{@product.name}")
       if product_info.present?
         ProductCalories.create(product_id: @product.id,
-                            calories: product_info.calories,
-                            unit: product_info.unit,
-                            quantity: product_info.grams)
+                            calories: product_info.dig("nf_calories"),
+                            unit: product_info.dig("nf_serving_size_unit"),
+                            quantity: product_info.dig("nf_serving_weight_grams"))
       end
     end
 
