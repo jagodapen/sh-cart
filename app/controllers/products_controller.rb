@@ -76,8 +76,9 @@ class ProductsController < ApplicationController
       if product_info.present?
         ProductCalories.create(product_id: @product.id,
                             calories: product_info.dig("nf_calories"),
-                            unit: product_info.dig("nf_serving_size_unit"),
-                            quantity: product_info.dig("nf_serving_weight_grams"))
+                            unit: product_info.dig("serving_unit"),
+                            grams: product_info.dig("serving_weight_grams"),
+                            full_name: product_info.dig("food_name"))
       end
     end
 
