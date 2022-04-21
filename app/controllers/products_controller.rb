@@ -1,6 +1,5 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy ]
-  after_action :fetch_product_calories, only: %i[ create update ]
 
   # GET /products or /products.json
   def index
@@ -27,6 +26,7 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
+        Products::FetchProductCalories.new(@product).call
         format.html { redirect_to product_url(@product), notice: "Product was successfully created." }
         format.json { render :show, status: :created, location: @product }
       else
@@ -40,6 +40,7 @@ class ProductsController < ApplicationController
   def update
     respond_to do |format|
       if @product.update(product_params)
+        Products::FetchProductCalories.new(@product).call
         format.html { redirect_to product_url(@product), notice: "Product was successfully updated." }
         format.json { render :show, status: :ok, location: @product }
       else
@@ -68,18 +69,6 @@ class ProductsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def product_params
       params.require(:product).permit(:name, :unit, :product_type)
-    end
-
-    def fetch_product_calories
-      nutritionix_product = Nutritionix::ApiClient.new
-      product_info = nutritionix_product.get_product_data("#{@product.name}")
-      if product_info.present?
-        ProductCalories.create(product_id: @product.id,
-                            calories: product_info.dig("nf_calories"),
-                            unit: product_info.dig("serving_unit"),
-                            grams: product_info.dig("serving_weight_grams"),
-                            full_name: product_info.dig("food_name"))
-      end
     end
 
 end
