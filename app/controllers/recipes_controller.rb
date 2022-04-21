@@ -1,6 +1,6 @@
 class RecipesController < ApplicationController
   before_action :set_recipe, only: %i[ show edit update destroy ]
-  after_action :calculate_recipe_product_calories, only: %i[ create update ]
+  # after_action :calculate_recipe_product_calories, only: %i[ create update ]
   # GET /recipes or /recipes.json
   def index
     @recipes = Recipe.all
@@ -29,6 +29,7 @@ class RecipesController < ApplicationController
 
     respond_to do |format|
       if @recipe.save
+        Recipes::CalculateRecipeCalories.new(@recipe).call
         format.html { redirect_to recipe_url(@recipe), notice: "Recipe was successfully created." }
         format.json { render :show, status: :created, location: @recipe }
       else
@@ -42,6 +43,7 @@ class RecipesController < ApplicationController
   def update
     respond_to do |format|
       if @recipe.update(recipe_params)
+        Recipes::CalculateRecipeCalories.new(@recipe).call
         format.html { redirect_to recipe_url(@recipe), notice: "Recipe was successfully updated." }
         format.json { render :show, status: :ok, location: @recipe }
       else
@@ -73,14 +75,4 @@ class RecipesController < ApplicationController
                                       recipe_products_attributes: [:id, :recipe_id, :product_id, :quantity, :calories, :_destroy])
     end
 
-    def calculate_recipe_product_calories
-      # debugger
-      @recipe.recipe_products.each do |rp|
-        if ProductCalories.exists?(product_id: rp.product_id)
-          calories_of_one = ProductCalories.find_by(product_id: rp.product_id)&.calories
-          calculated_calories = calories_of_one * rp.quantity
-          rp.update(calories: calculated_calories)
-        end
-      end
-    end
 end
