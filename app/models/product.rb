@@ -13,4 +13,11 @@ class Product < ApplicationRecord
   validates :unit, presence: true, length: { maximum: 15 }
 
   enum :product_type, { fruit: 0, vegetable: 1, nuts: 2, meat: 3, egg: 4, seafood: 5, dairy_products: 6, cereal_products: 7, spices: 8, extras: 9, fat: 10, drink: 11, other: 12 }
+
+  after_save :fetch_calories
+
+  def fetch_calories
+    Products::FetchProductCalories.new(self).call
+  end
+
 end
