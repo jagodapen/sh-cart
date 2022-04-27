@@ -1,5 +1,5 @@
 require 'rails_helper'
-
+include RecipesHelper
 # Specs in this file have access to a helper object that includes
 # the RecipesHelper. For example:
 #
@@ -11,5 +11,11 @@ require 'rails_helper'
 #   end
 # end
 RSpec.describe RecipesHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  it 'converts preparation time to hours&minutes format' do
+    recipe = build(:recipe, preparation_time: 164)
+    result = preparation_time_hours(recipe.preparation_time)
+    expect(result).to eq("2h 44min")
+  end
+  
 end

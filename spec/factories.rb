@@ -1,8 +1,13 @@
 FactoryBot.define do
+  factory :recipe_product do
+    recipe
+    product
+  end
+
   factory :recipe do
-    name { "MyString" }
-    description { "MyText" }
-    preparation_time { "2022-03-17 13:55:36" }
+    name { Faker::Food.dish }
+    description { Faker::Food.description }
+    preparation_time { Faker::Number.within(range: 1..200).to_i }
   end
 
   factory :shopping_list do
@@ -14,5 +19,16 @@ FactoryBot.define do
   factory :product do
     name { Faker::Food.ingredient }
     unit { Faker::Food.metric_measurement }
+    product_type { rand(0..12) }
   end
+
+  factory :product_calories do
+    calories { 528 }
+    grams { 115 }
+    unit { "some unit" }
+    full_name { "Full name" }
+    product_id { 1 }
+  end
+
+
 end

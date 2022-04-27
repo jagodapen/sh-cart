@@ -6,6 +6,6 @@ class Recipe < ApplicationRecord
   after_save :calculate_calories
 
   def calculate_calories
-    Recipes::CalculateRecipeCalories.new(self).call
+    Recipes::CalculateRecipeProductsCalories.new(self).call
   end
 end
