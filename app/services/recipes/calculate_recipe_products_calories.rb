@@ -5,22 +5,19 @@ class Recipes::CalculateRecipeProductsCalories
   end
 
   def call
-    calculate_recipe_calories
+    calculate_recipe_products_calories
   end
 
   private
 
-  def calculate_recipe_calories
-    recipe_calories = 0
+  def calculate_recipe_products_calories
     @recipe.recipe_products.each do |rp|
       if rp.product_calories
         calories_of_one = rp.product_calories&.calories
         calculated_calories = calories_of_one * rp.quantity
         rp.update(calories: calculated_calories)
-        recipe_calories += calculated_calories
       end
     end
-    @recipe.calories = recipe_calories
   end
 
 end

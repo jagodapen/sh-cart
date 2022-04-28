@@ -17,7 +17,8 @@ class Product < ApplicationRecord
   after_save :fetch_calories
 
   def fetch_calories
-    Calories::FetchProductCalories.new(self).call
+    nutritionix_product = Nutritionix::ApiClient.new
+    Nutritionix::FetchProductCalories.new(self, nutritionix_product).call
   end
 
 end
