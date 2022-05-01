@@ -6,7 +6,8 @@
     - @recipes.each do |recipe|
       .d-flex.align-items-center.list-group-item.p-1
         .px-2.mx-2 mini IMG
-        .px-2.flex-grow-1= link_to recipe.name, recipe, class: 'text-dark text-decoration-none'
+        .px-2= link_to recipe.name, recipe, class: 'text-dark text-decoration-none'
+        .px-2.flex-grow-1.text-align-start.text-muted.fw-light="(#{recipe.calories.to_i} kcal)" if recipe.calories > 0
         .px-2.mx-2= preparation_time_hours(recipe.preparation_time) if recipe.preparation_time
         .px-2.mx-2.edit-icon.shc-icon.position-relative= link_to "", edit_recipe_path(recipe), class: "stretched-link"
         .px-2.mx-2.delete-icon.shc-icon.position-relative= link_to "", recipe, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "stretched-link"

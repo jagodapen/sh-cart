@@ -6,8 +6,4 @@ module RecipesHelper
     minutes>59 ? hours + min : min
   end
 
-  def recipe_product(id)
-    Product.find(id)
-  end
-  
 end

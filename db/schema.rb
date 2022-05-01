@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_28_102832) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_20_140358) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "product_calories", force: :cascade do |t|
+    t.float "calories"
+    t.integer "grams"
+    t.string "unit"
+    t.bigint "product_id"
+    t.string "full_name"
+    t.index ["product_id"], name: "index_product_calories_on_product_id"
+  end
 
   create_table "products", force: :cascade do |t|
     t.string "name", null: false
@@ -23,9 +32,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_28_102832) do
   end
 
   create_table "recipe_products", force: :cascade do |t|
-    t.integer "quantity"
+    t.integer "quantity", default: 1, null: false
     t.integer "recipe_id"
     t.integer "product_id"
+    t.integer "calories", default: 0, null: false
   end
 
   create_table "recipes", force: :cascade do |t|
@@ -34,6 +44,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_28_102832) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "preparation_time"
+    t.float "calories", default: 0.0, null: false
   end
 
   create_table "shopping_list_products", force: :cascade do |t|

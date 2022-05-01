@@ -1,5 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Recipe, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  it 'creates recipe with given values' do
+    recipe = build(:recipe)
+    expect(recipe).to be_valid
+  end
+
 end
