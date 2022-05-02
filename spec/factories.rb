@@ -15,8 +15,8 @@ FactoryBot.define do
   end
 
   factory :shopping_list do
-    name { "MyString" }
-    shopping_day { "2022-03-15" }
+    name { 'MyString' }
+    shopping_day { '2022-03-15' }
     status { 1 }
   end
 
@@ -32,8 +32,8 @@ FactoryBot.define do
   factory :product_calories do
     calories { 125 }
     grams { rand(1..200) }
-    unit { "some unit" }
-    full_name { "Full name" }
+    unit { 'some unit' }
+    full_name { 'Full name' }
     product
   end
 end

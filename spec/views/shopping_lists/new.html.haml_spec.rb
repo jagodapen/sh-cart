@@ -1,21 +1,20 @@
 require 'rails_helper'
 
-RSpec.describe "shopping_lists/new", type: :view do
+RSpec.describe 'shopping_lists/new', type: :view do
   before(:each) do
     assign(:shopping_list, ShoppingList.new(
-      name: "MyString",
-      status: 1
-    ))
+                             name: 'MyString',
+                             status: 1
+                           ))
   end
 
-  it "renders new shopping_list form" do
+  it 'renders new shopping_list form' do
     render
 
-    assert_select "form[action=?][method=?]", shopping_lists_path, "post" do
+    assert_select 'form[action=?][method=?]', shopping_lists_path, 'post' do
+      assert_select 'input[name=?]', 'shopping_list[name]'
 
-      assert_select "input[name=?]", "shopping_list[name]"
-
-      assert_select "input[name=?]", "shopping_list[status]"
+      assert_select 'input[name=?]', 'shopping_list[status]'
     end
   end
 end
