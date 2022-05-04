@@ -71,6 +71,7 @@ class ShoppingListsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def shopping_list_params
     params.require(:shopping_list).permit(:name, :shopping_day, :status,
-                                          shopping_list_products_attributes: %i[id shopping_list_id product_id quantity _destroy])
+                                          shopping_list_products_attributes:
+                                            %i[id shopping_list_id product_id quantity _destroy])
   end
 end

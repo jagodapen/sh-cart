@@ -16,10 +16,10 @@ module Nutritionix
       return unless product_info.present?
 
       ProductCalories.create(product_id: @product.id,
-                             calories: product_info.dig('nf_calories'),
-                             unit: product_info.dig('serving_unit'),
-                             grams: product_info.dig('serving_weight_grams'),
-                             full_name: product_info.dig('food_name'))
+                             calories: product_info['nf_calories'],
+                             unit: product_info['serving_unit'],
+                             grams: product_info['serving_weight_grams'],
+                             full_name: product_info['food_name'])
     end
   end
 end

@@ -16,9 +16,9 @@ module Nutritionix
         'x-app-key': @api_key
       }
       response = HTTParty.post('https://trackapi.nutritionix.com/v2/natural/nutrients',
-                               headers: headers,
+                               headers:,
                                body: { 'query': product })
-      return @product = response.dig('foods')&.first
+      return @product = response['foods']&.first
     end
   end
 end

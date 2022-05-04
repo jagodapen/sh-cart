@@ -1,19 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe Recipe do
-
   it 'calculates recipe products calories' do
+    product_calories1 = double(:product_calories, calories: 100)
+    product_calories2 = double(:product_calories, calories: 200)
+    product1 = double(:product, id: 1234, product_calories: product_calories1)
+    product2 = double(:product, id: 5678, product_calories: product_calories2)
 
-    product_calories_data = {"food_name"=>"brie",
-                             "serving_qty"=>1,
-                             "serving_unit"=>"oz",
-                             "serving_weight_grams"=>28.35,
-                             "nf_calories"=>100}
-    allow_any_instance_of(Nutritionix::ApiClient).to receive(:get_product_data).and_return(product_calories_data)
-    product = create(:product)
+    recipe = create(:recipe,
+                    recipe_products_attributes: [
+                      { product_id: product1.id, quantity: 2 },
+                      { product_id: product2.id, quantity: 2 }
+                    ])
 
-    recipe = create(:recipe)
-
-    expect(recipe.calories).to eq(500)
+    expect(recipe.recipe_products.find_by[product_id: product1.id].calories).to eq(200)
+    expect(recipe.recipe_products.find_by[product_id: product2.id].calories).to eq(400)
   end
 end
