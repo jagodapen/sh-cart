@@ -9,6 +9,10 @@ class ShoppingListsController < ApplicationController
   # GET /shopping_lists/1 or /shopping_lists/1.json
   def show
     @shopping_list_products = ShoppingListProduct.where(shopping_list_id: @shopping_list)
+    respond_to do |format|
+      format.xlsx
+      format.html
+    end
   end
 
   # GET /shopping_lists/new

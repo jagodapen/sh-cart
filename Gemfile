@@ -76,3 +76,6 @@ gem "haml-rails", "~> 2.0"
 gem "devise"
 gem "httparty"
 gem 'counter_culture', '~> 2.0'
+gem 'rubyzip'
+gem 'caxlsx'
+gem 'caxlsx_rails'

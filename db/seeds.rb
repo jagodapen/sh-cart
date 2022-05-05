@@ -39,8 +39,8 @@ ShoppingList.destroy_all
 
 20.times do
   shopping_list = ShoppingList.create(name: Faker::Commerce.vendor,
-                        shopping_day: Faker::Date.between(from: 7.days.ago, to: 14.days.from_now),
-                        status: Faker::Number.within(range: 0..1).to_i)
+                                      shopping_day: Faker::Date.between(from: 7.days.ago, to: 14.days.from_now),
+                                      status: Faker::Number.within(range: 0..1).to_i)
   products_num = Faker::Number.within(range: 3..15).to_i
   products_num.times do
     shopping_list.products << Product.all.sample
