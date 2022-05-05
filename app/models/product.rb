@@ -12,7 +12,19 @@ class Product < ApplicationRecord
   validates :name, presence: true, length: { minimum: 2, maximum: 50 }
   validates :unit, presence: true, length: { maximum: 15 }
 
-  enum :product_type, { fruit: 0, vegetable: 1, nuts: 2, meat: 3, egg: 4, seafood: 5, dairy_products: 6, cereal_products: 7, spices: 8, extras: 9, fat: 10, drink: 11, other: 12 }
+  enum :product_type, { fruit: 0,
+                        vegetable: 1,
+                        nuts: 2,
+                        meat: 3,
+                        egg: 4,
+                        seafood: 5,
+                        dairy_products: 6,
+                        cereal_products: 7,
+                        spices: 8,
+                        extras: 9,
+                        fat: 10,
+                        drink: 11,
+                        other: 12 }
 
   after_save :fetch_calories
 
@@ -20,5 +32,4 @@ class Product < ApplicationRecord
     nutritionix_product = Nutritionix::ApiClient.new
     Nutritionix::FetchProductCalories.new(self, nutritionix_product).call
   end
-
 end
