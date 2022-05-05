@@ -10,8 +10,14 @@ class ShoppingListsController < ApplicationController
   def show
     @shopping_list_products = ShoppingListProduct.where(shopping_list_id: @shopping_list)
     respond_to do |format|
-      format.xlsx
+      format.xlsx {
+        response.headers['Content-Disposition'] = "attachment; filename=shopping_list-#{@shopping_list.name}-#{@shopping_list.shopping_day}.xlsx"
+      }
       format.html
+      format.csv {
+        response.headers['Content-Type'] = 'text/csv'
+        response.headers['Content-Disposition'] = "attachment; filename=shopping_list-#{@shopping_list.name}-#{@shopping_list.shopping_day}.csv"
+      }
     end
   end
 
