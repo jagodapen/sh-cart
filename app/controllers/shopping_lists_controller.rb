@@ -1,5 +1,5 @@
 class ShoppingListsController < ApplicationController
-  before_action :set_shopping_list, only: %i[ show edit update destroy ]
+  before_action :set_shopping_list, only: %i[show edit update destroy]
 
   # GET /shopping_lists or /shopping_lists.json
   def index
@@ -45,7 +45,7 @@ class ShoppingListsController < ApplicationController
 
     respond_to do |format|
       if @shopping_list.save
-        format.html { redirect_to shopping_list_url(@shopping_list), notice: "Shopping list was successfully created." }
+        format.html { redirect_to shopping_list_url(@shopping_list), notice: 'Shopping list was successfully created.' }
         format.json { render :show, status: :created, location: @shopping_list }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -58,7 +58,7 @@ class ShoppingListsController < ApplicationController
   def update
     respond_to do |format|
       if @shopping_list.update(shopping_list_params)
-        format.html { redirect_to shopping_list_url(@shopping_list), notice: "Shopping list was successfully updated." }
+        format.html { redirect_to shopping_list_url(@shopping_list), notice: 'Shopping list was successfully updated.' }
         format.json { render :show, status: :ok, location: @shopping_list }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -72,20 +72,22 @@ class ShoppingListsController < ApplicationController
     @shopping_list.destroy
 
     respond_to do |format|
-      format.html { redirect_to shopping_lists_url, notice: "Shopping list was successfully destroyed." }
+      format.html { redirect_to shopping_lists_url, notice: 'Shopping list was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_shopping_list
-      @shopping_list = ShoppingList.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def shopping_list_params
-      params.require(:shopping_list).permit(:name, :shopping_day, :status,
-                                            shopping_list_products_attributes: [:id, :shopping_list_id, :product_id, :quantity, :_destroy])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_shopping_list
+    @shopping_list = ShoppingList.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def shopping_list_params
+    params.require(:shopping_list).permit(:name, :shopping_day, :status,
+                                          shopping_list_products_attributes:
+                                            %i[id shopping_list_id product_id quantity _destroy])
+  end
 end

@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe RecipeProduct, type: :model do
-
   it 'creates recipe_product with defined values' do
     recipe_product = build(:recipe_product)
     expect(recipe_product).to be_valid
@@ -17,5 +16,4 @@ RSpec.describe RecipeProduct, type: :model do
     recipe_product.product.product_calories = nil
     expect(recipe_product.calories).to eq(0)
   end
-
 end
