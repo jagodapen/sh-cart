@@ -16,6 +16,6 @@
     .col
       %button.btn.btn-dark.m-2.position-relative(type="button")= link_to 'Export ExcelSheet', shopping_list_path(format: 'xlsx'), class: 'text-light text-decoration-none stretched-link'
       %button.btn.btn-dark.m-2.position-relative(type="button")= link_to 'Export CSV', shopping_list_path(format: 'csv'), class: 'text-light text-decoration-none stretched-link'
-      -# %button.btn.btn-dark.m-2(type="button")= link_to 'Export PDF', '#', class: 'text-light text-decoration-none stretched-link'
+      %button.btn.btn-dark.m-2.position-relative(type="button")= link_to 'Export PDF', shopping_list_path(format: 'pdf'), class: 'text-light text-decoration-none stretched-link'
 
 .mx-5.my-2= link_to '<<< Back', shopping_lists_path, class: "text-dark text-decoration-none"
