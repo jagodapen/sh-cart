@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_20_140358) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_08_111908) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -47,6 +47,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_20_140358) do
     t.float "calories", default: 0.0, null: false
   end
 
+  create_table "shopping_list_emails", force: :cascade do |t|
+    t.bigint "shopping_list_id", null: false
+    t.date "send_date", null: false
+    t.integer "file_format", null: false
+    t.string "recipient", null: false
+    t.boolean "send", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["shopping_list_id"], name: "index_shopping_list_emails_on_shopping_list_id"
+  end
+
   create_table "shopping_list_products", force: :cascade do |t|
     t.bigint "shopping_list_id"
     t.bigint "product_id"
@@ -65,4 +76,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_20_140358) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "shopping_list_emails", "shopping_lists"
 end
