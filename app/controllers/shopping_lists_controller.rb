@@ -9,6 +9,22 @@ class ShoppingListsController < ApplicationController
   # GET /shopping_lists/1 or /shopping_lists/1.json
   def show
     @shopping_list_products = ShoppingListProduct.where(shopping_list_id: @shopping_list)
+    respond_to do |format|
+      format.xlsx {
+        response.headers['Content-Disposition'] = "attachment; filename=shopping_list-#{@shopping_list.name}-#{@shopping_list.shopping_day}.xlsx"
+      }
+      format.html
+      format.csv {
+        response.headers['Content-Type'] = 'text/csv'
+        response.headers['Content-Disposition'] = "attachment; filename=shopping_list-#{@shopping_list.name}-#{@shopping_list.shopping_day}.csv"
+      }
+      format.pdf {
+        pdf = ShoppingListPdf.new(@shopping_list, @shopping_list_products)
+        send_data pdf.render, filename: "shopping_list-#{@shopping_list.name}-#{@shopping_list.shopping_day}",
+                              type: 'application/pdf',
+                              disposition: 'inline'
+      }
+    end
   end
 
   # GET /shopping_lists/new

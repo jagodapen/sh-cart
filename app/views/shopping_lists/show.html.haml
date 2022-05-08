@@ -6,11 +6,16 @@
     .px-2.mx-2.edit-icon.shc-icon.position-relative= link_to "", edit_shopping_list_path(@shopping_list), class: "stretched-link"
     .px-2.mx-2.delete-icon.shc-icon.position-relative= link_to "", @shopping_list, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "stretched-link"
   %h4.my-3.text-center Products to buy:
-  .m-2
-    - @shopping_list_products.each do |shl_product|
-      .d-flex.align-items-center.list-group-item.list-group-item-action.p-1
-        .px-2= product(shl_product.product_id).name
-        .px-2= shl_product.quantity
-        .px-2.flex-grow-1.text-align-start.text-muted.fw-light= "(#{product(shl_product.product_id).unit})"
+  .row.mx-2
+    .col-12.col-sm-8.mb-2
+      - @shopping_list.shopping_list_products.each do |shl_product|
+        .d-flex.align-items-center.list-group-item.list-group-item-action.p-1
+          .px-2.flex-grow-1= product(shl_product.product_id).name
+          .px-2= shl_product.quantity
+          .px-2.text-align-start.text-muted.fw-light= "(#{product(shl_product.product_id).unit})"
+    .col
+      %button.btn.btn-dark.m-2.position-relative(type="button")= link_to 'Export ExcelSheet', shopping_list_path(format: 'xlsx'), class: 'text-light text-decoration-none stretched-link'
+      %button.btn.btn-dark.m-2.position-relative(type="button")= link_to 'Export CSV', shopping_list_path(format: 'csv'), class: 'text-light text-decoration-none stretched-link'
+      %button.btn.btn-dark.m-2.position-relative(type="button")= link_to 'Export PDF', shopping_list_path(format: 'pdf'), class: 'text-light text-decoration-none stretched-link'
 
 .mx-5.my-2= link_to '<<< Back', shopping_lists_path, class: "text-dark text-decoration-none"

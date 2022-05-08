@@ -72,7 +72,12 @@ group :development do
 end
 
 gem 'counter_culture', '~> 2.0'
+gem 'caxlsx'
+gem 'caxlsx_rails'
 gem 'devise'
 gem 'haml'
 gem 'haml-rails', '~> 2.0'
 gem 'httparty'
+gem 'matrix'
+gem 'prawn'
+gem 'rubyzip'
