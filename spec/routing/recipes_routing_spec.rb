@@ -1,5 +1,5 @@
 require 'rails_helper'
-
+# rubocop:disable Metrics/BlockLength
 RSpec.describe RecipesController, type: :routing do
   describe 'routing' do
     it 'routes to #index' do
@@ -35,3 +35,4 @@ RSpec.describe RecipesController, type: :routing do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

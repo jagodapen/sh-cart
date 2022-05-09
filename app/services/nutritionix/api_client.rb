@@ -17,8 +17,8 @@ module Nutritionix
       }
       response = HTTParty.post('https://trackapi.nutritionix.com/v2/natural/nutrients',
                                headers:,
-                               body: { 'query': product })
-      return @product = response['foods']&.first
+                               body: { query: product })
+      @product = response['foods']&.first
     end
   end
 end
