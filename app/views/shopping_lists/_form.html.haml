@@ -7,7 +7,8 @@
         #input-shopping-list-name= f.text_field :name, class: "form-control", placeholder: :name
       .col-12.col-sm-4
         #input-shopping-list-date= f.date_field :shopping_day, class: "form-control", placeholder: :shopping_day
-
+    -# adding products section
+    .row.m-2
       #sl-products-list-container.position-relative.col-12
         .p-2.text-muted.fw-light Products:
         %template{"data-nested-form-target" => "template"}
@@ -19,7 +20,20 @@
 
         %div{"data-nested-form-target" => "target"}
         %button.btn.btn-outline-dark.me-2{"data-action" => "nested-form#add", type: "button"} Add Product
+    -# setting up email section
+    .row.m-2
+      #sl-email-container.position-relative.col-12
+        .p-2.text-muted.fw-light Email:
+        = f.fields_for :shopping_list_email, @shopping_list_email do |email|
+          .row
+            .col-6.col-sm-4
+              #input-shopping-list-status= email.date_field :send_date, class: "form-select", placeholder: Date.tomorrow
+            .col-6.col-sm-2
+              #input-shopping-list-date= email.select :file_format, options_for_select(shopping_list_file_formats, email.object.file_format), {}, class: "form-control"
+            .col-12.col-sm-6
+              #input-shopping-list-name= email.text_field :recipient, class: "form-control"
 
+    -# subbmition
     .ps-4.pb-4
       = link_to 'Show', @shopping_list, class: "btn btn-outline-dark" if @shopping_list.id
       = f.submit @shopping_list.id ? 'Save' : 'Create', class: "btn btn-dark me-2", type: "submit"

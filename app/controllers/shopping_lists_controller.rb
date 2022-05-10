@@ -32,6 +32,7 @@ class ShoppingListsController < ApplicationController
     @shopping_list = ShoppingList.new
     @shopping_list.shopping_list_products.build
     @shopping_list_product = ShoppingListProduct.new
+    @shopping_list_email = ShoppingListEmail.new
   end
 
   # GET /shopping_lists/1/edit
@@ -88,6 +89,8 @@ class ShoppingListsController < ApplicationController
   def shopping_list_params
     params.require(:shopping_list).permit(:name, :shopping_day, :status,
                                           shopping_list_products_attributes:
-                                            %i[id shopping_list_id product_id quantity _destroy])
+                                            %i[id shopping_list_id product_id quantity _destroy],
+                                          shopping_list_email_attributes:
+                                            %i[id shopping_list_id send_date file_format recipient _destroy],)
   end
 end
