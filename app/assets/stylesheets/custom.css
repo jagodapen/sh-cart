@@ -53,7 +53,15 @@
   background-image: url("delete.svg");
 }
 
-.edit-icon, .delete-icon {
+.email-set-icon {
+  background-image: url("email-set.svg");
+}
+
+.email-not-set-icon {
+  background-image: url("email-not_set.svg");
+}
+
+.action-icon {
   width: 15px;
   height: 15px;
 }

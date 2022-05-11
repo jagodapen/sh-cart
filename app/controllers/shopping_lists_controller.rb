@@ -44,7 +44,7 @@ class ShoppingListsController < ApplicationController
   # POST /shopping_lists or /shopping_lists.json
   def create
     @shopping_list = ShoppingList.new(shopping_list_params)
-
+    debugger
     respond_to do |format|
       if @shopping_list.save
         format.html { redirect_to shopping_list_url(@shopping_list), notice: 'Shopping list was successfully created.' }
@@ -92,6 +92,6 @@ class ShoppingListsController < ApplicationController
                                           shopping_list_products_attributes:
                                             %i[id shopping_list_id product_id quantity _destroy],
                                           shopping_list_email_attributes:
-                                            %i[id shopping_list_id send_date file_format recipient _destroy],)
+                                            %i[id shopping_list_id send_date file_format recipient])
   end
 end
