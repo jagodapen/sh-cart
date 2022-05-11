@@ -38,6 +38,7 @@ class ShoppingListsController < ApplicationController
   # GET /shopping_lists/1/edit
   def edit
     @shopping_list_product = ShoppingListProduct.new
+    @shopping_list_email = ShoppingListEmail.new
   end
 
   # POST /shopping_lists or /shopping_lists.json
