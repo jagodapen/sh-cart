@@ -26,18 +26,22 @@
     -# setting up email section
     .row.m-2.py-2
       #sl-email-container.position-relative.col-12
-        .pe-2.text-muted.fw-light Do you want to receive the list by email? Just fill it in:
-        = f.fields_for :shopping_list_email, @shopping_list_email do |email|
-          .row
-            .col-6.col-sm-4.d-flex.flex-column
-              .pe-2.py-2.text-muted.fw-light.text-start= email.label :send_date, 'When:'
-              #input-shopping-list-status= email.date_field :send_date, class: "form-select", placeholder: Date.today
-            .col-6.col-sm-2.d-flex.flex-column
-              .pe-2.py-2.text-muted.fw-light.text-start= email.label :file_format, 'Format:'
-              #input-shopping-list-date= email.select :file_format, options_for_select(shopping_list_file_formats, email.object.file_format), {}, class: "form-control"
-            .col-12.col-sm-6.d-flex.flex-column
-              .pe-2.py-2.text-muted.fw-light.text-start= email.label :recipient, 'Email adress:'
-              #input-shopping-list-name= email.email_field :recipient, class: "form-control"
+        .form-check
+          = f.check_box :send_email, class: 'form-check-input'
+          .pe-2.text-muted.fw-light= f.label :send_email, 'Do you want to receive the list by email?', class: 'form-check-label'
+        - if :send_email
+          = f.fields_for :shopping_list_email, @shopping_list_email do |email|
+            .row
+              .col-6.col-sm-4.d-flex.flex-column
+                .pe-2.py-2.text-muted.fw-light.text-start= email.label :send_date, 'When:'
+                #input-shopping-list-status= email.date_field :send_date, class: "form-select", placeholder: Date.today
+              .col-6.col-sm-2.d-flex.flex-column
+                .pe-2.py-2.text-muted.fw-light.text-start= email.label :file_format, 'Format:'
+                #input-shopping-list-date= email.select :file_format, options_for_select(shopping_list_file_formats, email.object.file_format), {}, class: "form-control"
+              .col-12.col-sm-6.d-flex.flex-column
+                .pe-2.py-2.text-muted.fw-light.text-start= email.label :recipient, 'Email adress:'
+                #input-shopping-list-name= email.email_field :recipient, class: "form-control"
+              = email.hidden_field :was_send, value: false
 
     -# subbmition
     .p-4

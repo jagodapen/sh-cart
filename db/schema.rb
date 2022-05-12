@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_08_111908) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_11_180248) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -48,11 +48,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_08_111908) do
   end
 
   create_table "shopping_list_emails", force: :cascade do |t|
-    t.bigint "shopping_list_id", null: false
+    t.bigint "shopping_list_id"
     t.date "send_date", null: false
     t.integer "file_format", null: false
     t.string "recipient", null: false
-    t.boolean "send", default: false, null: false
+    t.boolean "was_send", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["shopping_list_id"], name: "index_shopping_list_emails_on_shopping_list_id"

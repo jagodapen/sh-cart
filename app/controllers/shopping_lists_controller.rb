@@ -32,6 +32,7 @@ class ShoppingListsController < ApplicationController
     @shopping_list = ShoppingList.new
     @shopping_list.shopping_list_products.build
     @shopping_list_product = ShoppingListProduct.new
+    @shopping_list.build_shopping_list_email
     @shopping_list_email = ShoppingListEmail.new
   end
 
@@ -44,7 +45,7 @@ class ShoppingListsController < ApplicationController
   # POST /shopping_lists or /shopping_lists.json
   def create
     @shopping_list = ShoppingList.new(shopping_list_params)
-    debugger
+
     respond_to do |format|
       if @shopping_list.save
         format.html { redirect_to shopping_list_url(@shopping_list), notice: 'Shopping list was successfully created.' }
@@ -88,10 +89,10 @@ class ShoppingListsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def shopping_list_params
-    params.require(:shopping_list).permit(:name, :shopping_day, :status,
+    params.require(:shopping_list).permit(:name, :shopping_day, :status, :send_email,
                                           shopping_list_products_attributes:
                                             %i[id shopping_list_id product_id quantity _destroy],
                                           shopping_list_email_attributes:
-                                            %i[id shopping_list_id send_date file_format recipient])
+                                            %i[id shopping_list_id send_date file_format recipient was_send _destroy])
   end
 end
