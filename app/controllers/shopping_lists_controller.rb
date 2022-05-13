@@ -1,6 +1,6 @@
 class ShoppingListsController < ApplicationController
   before_action :set_shopping_list, only: %i[show edit update destroy]
-
+  before_action :check_email_selection, only: %i[create update]
   # GET /shopping_lists or /shopping_lists.json
   def index
     @shopping_lists = ShoppingList.all
@@ -94,5 +94,11 @@ class ShoppingListsController < ApplicationController
                                             %i[id shopping_list_id product_id quantity _destroy],
                                           shopping_list_email_attributes:
                                             %i[id shopping_list_id send_date file_format recipient was_send _destroy])
+  end
+
+  def check_email_selection
+    if params.dig(:shopping_list, :send_email) == "0"
+      params[:shopping_list].delete :shopping_list_email_attributes
+    end
   end
 end

@@ -8,4 +8,7 @@ class ShoppingList < ApplicationRecord
   accepts_nested_attributes_for :shopping_list_email, reject_if: :all_blank, allow_destroy: true
   enum :status, { pending: 0, done: 1 }
 
+
+
+
 end
