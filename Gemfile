@@ -82,3 +82,4 @@ gem 'matrix'
 gem 'prawn'
 gem 'rubyzip'
 gem 'sidekiq'
+gem 'whenever', require: false
