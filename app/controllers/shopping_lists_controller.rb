@@ -19,7 +19,7 @@ class ShoppingListsController < ApplicationController
         response.headers['Content-Disposition'] = "attachment; filename=shopping_list-#{@shopping_list.name}-#{@shopping_list.shopping_day}.csv"
       }
       format.pdf {
-        pdf = ShoppingListPdf.new(@shopping_list, @shopping_list_products)
+        pdf = ShoppingListPdf.new(@shopping_list)
         send_data pdf.render, filename: "shopping_list-#{@shopping_list.name}-#{@shopping_list.shopping_day}",
                               type: 'application/pdf',
                               disposition: 'inline'
