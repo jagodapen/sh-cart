@@ -80,8 +80,10 @@ class ShoppingListsController < ApplicationController
     end
   end
 
-  def email_job
-    ShoppingListEmailJob.perform_now
+  def send_email_now
+    @shopping_list = ShoppingList.find(params[:format])
+    ShoppingListMailer.with(shopping_list: @shopping_list).shopping_list_email.deliver_now
+    redirect_to shopping_list_url(@shopping_list), notice: 'Shopping list was send.'
   end
 
   private
