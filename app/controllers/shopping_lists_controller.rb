@@ -80,6 +80,10 @@ class ShoppingListsController < ApplicationController
     end
   end
 
+  def email_job
+    ShoppingListEmailJob.perform_now
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

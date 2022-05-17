@@ -5,6 +5,9 @@
     .px-2.flex-grow-1.text-center= @shopping_list.name
     .px-2.mx-2.edit-icon.action-icon.shc-icon.position-relative= link_to "", edit_shopping_list_path(@shopping_list), class: "stretched-link"
     .px-2.mx-2.delete-icon.action-icon.shc-icon.position-relative= link_to "", @shopping_list, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "stretched-link"
+  - if @shopping_list.shopping_list_email.present?
+    = form_with url: shopping_lists_email_job_path do |f|
+      = f.submit 'Launch job'
   %h4.my-3.text-center Products to buy:
   .row.mx-2
     .col-12.col-sm-8.mb-2

@@ -19,6 +19,6 @@
 
 # Learn more: http://github.com/javan/whenever
 
-every :day, at: '8:00am' do
-  runner "ShoppingListEmailWorker.send_shopping_lists"
+every :day, at: '11:15am' do
+  runner "ShoppingListEmailJob.perform"
 end
