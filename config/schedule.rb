@@ -21,5 +21,5 @@
 set :output, 'log/whenever.log'
 
 every :day, at: '8:00am' do
-  runner "ShoppingListEmailJob.perform_now"
+  rake "send_shopping_lists"
 end
