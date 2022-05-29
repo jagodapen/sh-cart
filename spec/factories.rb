@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/BlockLength
 FactoryBot.define do
   factory :recipe_product do
     quantity { rand(1..5) }
@@ -37,3 +38,4 @@ FactoryBot.define do
     product
   end
 end
+# rubocop:enable Metrics/BlockLength
