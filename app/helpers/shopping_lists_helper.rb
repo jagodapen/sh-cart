@@ -10,4 +10,8 @@ module ShoppingListsHelper
   def product(id)
     Product.find(id)
   end
+
+  def file_name
+    "shopping_list-#{@shopping_list.name}-#{@shopping_list.shopping_day}"
+  end
 end

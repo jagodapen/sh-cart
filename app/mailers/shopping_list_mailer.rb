@@ -3,14 +3,7 @@ class ShoppingListMailer < ApplicationMailer
     @shopping_list = params[:shopping_list]
     email = @shopping_list.shopping_list_email
     @file_name = "shopping_list-#{@shopping_list.name}-#{@shopping_list.shopping_day}"
-    case @shopping_list.shopping_list_email.file_format
-      when 'xlsx'
-        export_xlsx
-      when 'pdf'
-        export_pdf
-      when 'csv'
-        export_csv
-    end
+    public_send("export_#{@shopping_list.shopping_list_email.file_format}")
     mail(to: email.recipient, subject: "Shopping List to #{@shopping_list.name}")
   end
 

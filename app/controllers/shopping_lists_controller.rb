@@ -11,16 +11,16 @@ class ShoppingListsController < ApplicationController
     @shopping_list_products = ShoppingListProduct.where(shopping_list_id: @shopping_list)
     respond_to do |format|
       format.xlsx {
-        response.headers['Content-Disposition'] = "attachment; filename=shopping_list-#{@shopping_list.name}-#{@shopping_list.shopping_day}.xlsx"
+        response.headers['Content-Disposition'] = "attachment; filename=#{file_name}.xlsx"
       }
       format.html
       format.csv {
         response.headers['Content-Type'] = 'text/csv'
-        response.headers['Content-Disposition'] = "attachment; filename=shopping_list-#{@shopping_list.name}-#{@shopping_list.shopping_day}.csv"
+        response.headers['Content-Disposition'] = "attachment; filename=#{file_name}.csv"
       }
       format.pdf {
         pdf = ShoppingListPdf.new(@shopping_list)
-        send_data pdf.render, filename: "shopping_list-#{@shopping_list.name}-#{@shopping_list.shopping_day}",
+        send_data pdf.render, filename: "#{file_name}",
                               type: 'application/pdf',
                               disposition: 'inline'
       }
