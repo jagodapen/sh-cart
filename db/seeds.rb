@@ -26,15 +26,26 @@ RecipeProduct.all.each { |rp| rp.update(quantity: rand(1..200)) }
 
 # -------creating products
 
-40.times do
+20.times do
   product = Product.create(name: Faker::Food.ingredient,
                            unit: %w[item teaspoon spoon g bag ml].sample,
                            product_type: Faker::Number.within(range: 0..12).to_i)
 end
+10.times do
+  product = Product.create(name: Faker::Food.fruits,
+                           unit: "item",
+                           product_type: 0)
+end
+10.times do
+  product = Product.create(name: Faker::Food.vegetables,
+                           unit: "item",
+                           product_type: 1)
+end
 
 # -------creating shopping lists
-
+ShoppingListEmail.destroy_all
 ShoppingList.destroy_all
+
 
 20.times do
   shopping_list = ShoppingList.create(name: Faker::Commerce.vendor,

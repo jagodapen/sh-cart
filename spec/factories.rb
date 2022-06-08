@@ -19,6 +19,7 @@ FactoryBot.define do
     name { 'MyString' }
     shopping_day { '2022-03-15' }
     status { 1 }
+    shopping_list_email { association :shopping_list_email }
   end
 
   factory :product do
@@ -36,6 +37,13 @@ FactoryBot.define do
     unit { 'some unit' }
     full_name { 'Full name' }
     product
+  end
+
+  factory :shopping_list_email do
+    send_date { '2022-03-15' }
+    file_format { 0 }
+    recipient { 'example@email.com' }
+    was_send { false }
   end
 end
 # rubocop:enable Metrics/BlockLength

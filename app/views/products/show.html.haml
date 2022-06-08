@@ -3,8 +3,8 @@
     .px-2.text-muted.fw-light= "[ #{@product.product_type} ]"
     .px-2.flex-grow-1= @product.name
     .px-2.text-align-start.text-muted.fw-light= @product&.product_calories ? "(#{@product.product_calories&.calories} kcal in 1 #{@product.product_calories&.unit} / #{@product.product_calories&.grams}g)" : "(#{@product.unit})"
-    .px-2.mx-2.edit-icon.shc-icon.position-relative= link_to "", edit_product_path(@product), class: "stretched-link"
-    .px-2.mx-2.delete-icon.shc-icon.position-relative= link_to "", @product, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "stretched-link"
+    .px-2.mx-2.edit-icon.action-icon.shc-icon.position-relative= link_to "", edit_product_path(@product), class: "stretched-link"
+    .px-2.mx-2.delete-icon.action-icon.shc-icon.position-relative= link_to "", @product, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "stretched-link"
   %h4.my-3.text-center= "Recipes with " + @product.name
   .my-2.mx-5.bg-light.position-relative
     .d-flex.flex-column.p-2
@@ -13,7 +13,7 @@
           .px-2.mx-2 mini IMG
           .px-2.flex-grow-1= link_to recipe.name, recipe, class: 'text-dark text-decoration-none'
           .px-2.mx-2= preparation_time_hours(recipe.preparation_time) if recipe.preparation_time
-          .px-2.mx-2.edit-icon.shc-icon.position-relative= link_to "", edit_recipe_path(recipe), class: "stretched-link"
-          .px-2.mx-2.delete-icon.shc-icon.position-relative= link_to "", recipe, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "stretched-link"
+          .px-2.mx-2.edit-icon.action-icon.shc-icon.position-relative= link_to "", edit_recipe_path(recipe), class: "stretched-link"
+          .px-2.mx-2.delete-icon.action-icon.shc-icon.position-relative= link_to "", recipe, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "stretched-link"
 
 .mx-5.my-2= link_to '<<< Back', products_path, class: "text-dark text-decoration-none"

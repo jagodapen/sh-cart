@@ -3,8 +3,8 @@
     .px-2.shc-icon{:class => @shopping_list.status=='pending' ? "pending-icon" : "done-icon"}
     .px-2= @shopping_list.shopping_day
     .px-2.flex-grow-1.text-center= @shopping_list.name
-    .px-2.mx-2.edit-icon.shc-icon.position-relative= link_to "", edit_shopping_list_path(@shopping_list), class: "stretched-link"
-    .px-2.mx-2.delete-icon.shc-icon.position-relative= link_to "", @shopping_list, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "stretched-link"
+    .px-2.mx-2.edit-icon.action-icon.shc-icon.position-relative= link_to "", edit_shopping_list_path(@shopping_list), class: "stretched-link"
+    .px-2.mx-2.delete-icon.action-icon.shc-icon.position-relative= link_to "", @shopping_list, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "stretched-link"
   %h4.my-3.text-center Products to buy:
   .row.mx-2
     .col-12.col-sm-8.mb-2
@@ -17,5 +17,13 @@
       %button.btn.btn-dark.m-2.position-relative(type="button")= link_to 'Export ExcelSheet', shopping_list_path(format: 'xlsx'), class: 'text-light text-decoration-none stretched-link'
       %button.btn.btn-dark.m-2.position-relative(type="button")= link_to 'Export CSV', shopping_list_path(format: 'csv'), class: 'text-light text-decoration-none stretched-link'
       %button.btn.btn-dark.m-2.position-relative(type="button")= link_to 'Export PDF', shopping_list_path(format: 'pdf'), class: 'text-light text-decoration-none stretched-link'
-
+  - if @shopping_list.shopping_list_email.present?
+    .p-1.px-2.d-flex
+      .px-2 Email set up →
+      .px-2
+        %div= "File format: #{@shopping_list.shopping_list_email.file_format}"
+        %div= "To: #{@shopping_list.shopping_list_email.recipient}"
+        %div= "When: #{@shopping_list.shopping_list_email.send_date.to_fs(:short)}"
+      = form_with url: shopping_lists_send_email_now_path(@shopping_list) do |f|
+        .p-2= f.submit 'Send now', class: "btn btn-dark"
 .mx-5.my-2= link_to '<<< Back', shopping_lists_path, class: "text-dark text-decoration-none"
