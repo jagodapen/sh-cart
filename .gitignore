@@ -35,3 +35,5 @@
 
 /node_modules
 /shcart_development.dump
+
+.env
