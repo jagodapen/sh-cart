@@ -17,11 +17,11 @@ class ProductRepository
 	  adapter.new(attrs)
 	end
 
-	def save(product:)
+	def save(product)
 	  product.save
 	end
 
-	def delete(product:)
+	def delete(product)
 	  product.delete
 	end
 end
