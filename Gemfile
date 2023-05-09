@@ -58,6 +58,8 @@ group :development, :test do
   gem 'faker'
   gem 'rspec-rails'
   gem 'dotenv-rails'
+  gem 'rubocop', '~> 1.50', require: false
+  gem 'rubocop-rspec', require: false
 end
 
 group :development do
