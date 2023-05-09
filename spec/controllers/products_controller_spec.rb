@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Product, type: :request do
 
-    describe '#index' do
+    describe 'GET #index' do
         it 'shows all products' do
             product1 = create :product
             product2 = create :product
@@ -14,7 +14,7 @@ RSpec.describe Product, type: :request do
         end
     end
 
-    describe '#new' do
+    describe 'GET #new' do
         it 'renders form' do
             get new_product_path
 
@@ -22,7 +22,7 @@ RSpec.describe Product, type: :request do
         end
     end
 
-    describe '#edit' do
+    describe 'GET #edit' do
         it 'renders form' do
             product = create :product
 
@@ -33,7 +33,7 @@ RSpec.describe Product, type: :request do
         end
     end
 
-    describe '#show' do
+    describe 'GET #show' do
         it 'shows product' do
             product = create :product
 
@@ -44,7 +44,7 @@ RSpec.describe Product, type: :request do
         end
     end
 
-    describe '#create' do
+    describe 'POST #create' do
         it 'creates new product' do
             params = { 
                 product: { 
@@ -61,19 +61,19 @@ RSpec.describe Product, type: :request do
         end
     end
 
-    describe '#update' do
+    describe 'PUT #update' do
         it 'updates product' do
             product = create :product
-            params = { product: { name: 'New name', unit: 'New unit', product_type: 'fruit' } }
+            new_params = { product: { name: 'New name', unit: 'New unit', product_type: 'fruit' } }
 
-            put product_path(product), params: params
+            put product_path(product), params: new_params
             
             expect(response).to redirect_to(product_path(product))
             expect(product.reload.name).to eq 'New name'
         end
     end
 
-    describe '#destroy' do
+    describe 'DELETE #destroy' do
         it 'destroy product' do
             product = create :product
 
