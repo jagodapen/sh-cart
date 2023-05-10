@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ShoppingList < ApplicationRecord
   attr_accessor :send_email
 

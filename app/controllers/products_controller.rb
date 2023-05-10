@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class ProductsController < ApplicationController
-  before_action :set_product, only: %i[show edit update destroy]
+  before_action :set_product, only: %i(show edit update destroy)
 
   # GET /products or /products.json
   def index
@@ -28,7 +30,7 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if repository.save(@product)
-        format.html { redirect_to product_url(@product), notice: 'Product was successfully created.' }
+        format.html { redirect_to product_url(@product), notice: "Product was successfully created." }
         format.json { render :show, status: :created, location: @product }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -43,7 +45,7 @@ class ProductsController < ApplicationController
     @product.attributes = product_params
     respond_to do |format|
       if repository.save(@product)
-        format.html { redirect_to product_url(@product), notice: 'Product was successfully updated.' }
+        format.html { redirect_to product_url(@product), notice: "Product was successfully updated." }
         format.json { render :show, status: :ok, location: @product }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -58,7 +60,7 @@ class ProductsController < ApplicationController
     repository.delete(@product)
 
     respond_to do |format|
-      format.html { redirect_to products_url, status: :see_other, notice: 'Product was successfully destroyed.' }
+      format.html { redirect_to products_url, status: :see_other, notice: "Product was successfully destroyed." }
       format.json { head :no_content }
     end
   end

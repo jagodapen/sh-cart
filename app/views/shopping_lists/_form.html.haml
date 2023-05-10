@@ -1,14 +1,14 @@
 .form-container.bg-light.mx-5
-  = form_with model: @shopping_list, data: { controller: 'nested-form', nested_form_wrapper_selector_value: '.nested-form-wrapper' } do |f|
+  = form_with model: @shopping_list, data: { controller: "nested-form", nested_form_wrapper_selector_value: ".nested-form-wrapper" } do |f|
     .row.m-2.py-2
       .col-6.col-sm-2.d-flex.flex-column
-        .pe-2.py-2.text-muted.fw-light.text-start= f.label :status, 'Status:'
+        .pe-2.py-2.text-muted.fw-light.text-start= f.label :status, "Status:"
         #input-shopping-list-status= f.select :status, options_for_select(shopping_list_statuses, f.object.status), {}, class: "form-select"
       .col-12.col-sm-6.d-flex.flex-column
-        .pe-2.py-2.text-muted.fw-light.text-start= f.label :name, 'Name:'
+        .pe-2.py-2.text-muted.fw-light.text-start= f.label :name, "Name:"
         #input-shopping-list-name= f.text_field :name, class: "form-control", placeholder: :name
       .col-12.col-sm-4.d-flex.flex-column
-        .pe-2.py-2.text-muted.fw-light.text-start= f.label :shopping_day, 'Shopping Day:'
+        .pe-2.py-2.text-muted.fw-light.text-start= f.label :shopping_day, "Shopping Day:"
         #input-shopping-list-date= f.date_field :shopping_day, class: "form-control", placeholder: :shopping_day
     -# adding products section
     .row.m-2.py-2
@@ -16,11 +16,11 @@
         #sl-products-list-container.position-relative
           .pe-2.text-muted.fw-light Products:
           %template{"data-nested-form-target" => "template"}
-            = f.fields_for :shopping_list_products, @shopping_list_product, child_index: 'NEW_RECORD' do |builder|
-              = render 'shopping_list_product_fields', f: builder
+            = f.fields_for :shopping_list_products, @shopping_list_product, child_index: "NEW_RECORD" do |builder|
+              = render "shopping_list_product_fields", f: builder
 
           = f.fields_for :shopping_list_products do |builder|
-            = render 'shopping_list_product_fields', f: builder
+            = render "shopping_list_product_fields", f: builder
 
           %div{"data-nested-form-target" => "target"}
           %button.btn.btn-outline-dark.me-2{"data-action" => "nested-form#add", type: "button"} Add Product
@@ -28,22 +28,22 @@
       .col-4.py-4
         #sl-email-container.position-relative
           .form-check
-            = f.check_box :send_email, class: 'form-check-input'
-            .pe-2.text-muted.fw-light= f.label :send_email, 'Send me the list by email', class: 'form-check-label'
+            = f.check_box :send_email, class: "form-check-input"
+            .pe-2.text-muted.fw-light= f.label :send_email, "Send me the list by email", class: "form-check-label"
           - if :send_email
             = f.fields_for :shopping_list_email, @shopping_list_email do |email|
               .d-flex.flex-column
-                .pe-2.py-2.text-muted.fw-light.text-start= email.label :send_date, 'When:'
+                .pe-2.py-2.text-muted.fw-light.text-start= email.label :send_date, "When:"
                 #input-shopping-list-status= email.date_field :send_date, class: "form-select", placeholder: Date.today
               .d-flex.flex-column
-                .pe-2.py-2.text-muted.fw-light.text-start= email.label :file_format, 'Format:'
+                .pe-2.py-2.text-muted.fw-light.text-start= email.label :file_format, "Format:"
                 #input-shopping-list-date= email.select :file_format, options_for_select(shopping_list_file_formats, email.object.file_format), {}, class: "form-control"
               .d-flex.flex-column
-                .pe-2.py-2.text-muted.fw-light.text-start= email.label :recipient, 'Email adress:'
+                .pe-2.py-2.text-muted.fw-light.text-start= email.label :recipient, "Email adress:"
                 #input-shopping-list-name= email.email_field :recipient, class: "form-control"
               = email.hidden_field :was_send, value: false
 
     -# subbmition
     .p-4
-      = link_to 'Show', @shopping_list, class: "btn btn-outline-dark" if @shopping_list.id
-      = f.submit @shopping_list.id ? 'Save' : 'Create', class: "btn btn-dark me-2", type: "submit"
+      = link_to "Show", @shopping_list, class: "btn btn-outline-dark" if @shopping_list.id
+      = f.submit @shopping_list.id ? "Save" : "Create", class: "btn btn-dark me-2", type: "submit"

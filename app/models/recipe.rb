@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Recipe < ApplicationRecord
   has_many :recipe_products, dependent: :destroy
   has_many :products, through: :recipe_products

@@ -1,5 +1,5 @@
 .d-grid.gap-2.d-md-block.mx-5
-  %button.btn.btn-dark.me-2.position-relative(type="button")= link_to 'New Shopping List', new_shopping_list_path, class: 'text-light text-decoration-none stretched-link'
+  %button.btn.btn-dark.me-2.position-relative(type="button")= link_to "New Shopping List", new_shopping_list_path, class: "text-light text-decoration-none stretched-link"
 
 #shopping-lists-container.d-flex.flex-column.align-items-stretch.my-2.mx-5.bg-light
   - @shopping_lists.group_by(&:status).sort.reverse.each do |status, shopping_lists|
@@ -9,9 +9,9 @@
         .d-flex.align-items-center.list-group-item.list-group-item-action.p-1
           .px-2.shc-icon{:class => shopping_list.pending? ? "pending-icon" : "done-icon"}
           .px-2.text-muted.fw-light= shopping_list.shopping_day
-          .px-2.flex-grow-1= link_to shopping_list.name, shopping_list, class: 'text-align-center text-dark text-decoration-none'
+          .px-2.flex-grow-1= link_to shopping_list.name, shopping_list, class: "text-align-center text-dark text-decoration-none"
           .px-2.mx-2.shc-icon.action-icon.position-relative{:class => shopping_list.shopping_list_email ? "email-set-icon" : "email-not-set-icon"}= link_to "", edit_shopping_list_path(shopping_list), class: "stretched-link"
           .px-2.mx-2.edit-icon.shc-icon.action-icon.position-relative= link_to "", edit_shopping_list_path(shopping_list), class: "stretched-link"
           .px-2.mx-2.delete-icon.shc-icon.action-icon.position-relative= link_to "", shopping_list, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "stretched-link"
 
-.mx-5.my-2= link_to '<<< Back', root_path, class: "text-dark text-decoration-none"
+.mx-5.my-2= link_to "<<< Back", root_path, class: "text-dark text-decoration-none"

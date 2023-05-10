@@ -11,7 +11,7 @@
     = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
   %body
 
-    = render 'shared/navbar'
+    = render "shared/navbar"
 
     .mx-5.my-2
       - if notice
@@ -21,4 +21,4 @@
 
     = yield
 
-    = render 'shared/footer'
+    = render "shared/footer"

@@ -1,4 +1,5 @@
-# rubocop:disable Metrics/BlockLength
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :recipe_product do
     quantity { rand(1..5) }
@@ -16,8 +17,8 @@ FactoryBot.define do
   end
 
   factory :shopping_list do
-    name { 'MyString' }
-    shopping_day { '2022-03-15' }
+    name { "MyString" }
+    shopping_day { "2022-03-15" }
     status { 1 }
     shopping_list_email { association :shopping_list_email }
   end
@@ -34,16 +35,15 @@ FactoryBot.define do
   factory :product_calories do
     calories { 125 }
     grams { rand(1..200) }
-    unit { 'some unit' }
-    full_name { 'Full name' }
+    unit { "some unit" }
+    full_name { "Full name" }
     product
   end
 
   factory :shopping_list_email do
-    send_date { '2022-03-15' }
+    send_date { "2022-03-15" }
     file_format { 0 }
-    recipient { 'example@email.com' }
+    recipient { "example@email.com" }
     was_send { false }
   end
 end
-# rubocop:enable Metrics/BlockLength

@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 # Use this file to easily define all of your cron jobs.
 #
-# It's helpful, but not entirely necessary to understand cron before proceeding.
+# It"s helpful, but not entirely necessary to understand cron before proceeding.
 # http://en.wikipedia.org/wiki/Cron
 
 # Example:
@@ -18,8 +20,8 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-set :output, 'log/whenever.log'
+set :output, "log/whenever.log"
 
-every :day, at: '8:00am' do
+every :day, at: "8:00am" do
   rake "send_shopping_lists"
 end

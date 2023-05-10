@@ -1,14 +1,11 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
-RSpec.describe 'recipes/show', type: :view do
-  before(:each) do
-    @recipe = assign(:recipe, Recipe.create!(
-                                name: 'Name',
-                                description: 'MyText'
-                              ))
-  end
+require "rails_helper"
 
-  it 'renders attributes in <p>' do
+RSpec.describe "recipes/show" do
+  before { assign(:recipe, create(:recipe, name: "Name", description: "MyText")) }
+
+  it "renders attributes in <p>" do
     render
     expect(rendered).to match(/Name/)
     expect(rendered).to match(/MyText/)
