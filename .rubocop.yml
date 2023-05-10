@@ -4,11 +4,11 @@ AllCops:
   NewCops: enable
   SuggestExtensions: false
   Exclude:
-    - 'db/**/*'
-    - 'bin/*'
-
-Rails:
-  Enabled: true
+    - "db/**/*"
+    - "bin/*"
+    - "lib/*"
+    - "assets/*"
+    - "javascript/*"
 
 Style/Documentation:
   Enabled: false
@@ -45,9 +45,6 @@ Style/StringLiterals:
 
 Style/StringLiteralsInInterpolation:
   EnforcedStyle: double_quotes
-
-Style/BracesAroundHashParameters:
-  EnforcedStyle: context_dependent
 
 Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: comma
@@ -91,14 +88,14 @@ Metrics/BlockLength:
 Metrics/MethodLength:
   Max: 25
 
-Metrics/LineLength:
-  Max: 120
-
 Metrics/ClassLength:
   Max: 150
 
 Metrics/ModuleLength:
   Max: 150
+
+Layout/LineLength:
+  Max: 120
 
 Layout/EndAlignment:
   EnforcedStyleAlignWith: variable
@@ -108,9 +105,9 @@ Lint/AssignmentInCondition:
 
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
-    '%i': '()'
-    '%w': '()'
-    '%W': '()'
+    "%i": "()"
+    "%w": "()"
+    "%W": "()"
 
 RSpec/NestedGroups:
   Enabled: false

@@ -1,5 +1,5 @@
 .form-container.bg-light.mx-5
-  = form_with model: @recipe, data: { controller: 'nested-form', nested_form_wrapper_selector_value: '.nested-form-wrapper' }  do |f|
+  = form_with model: @recipe, data: { controller: "nested-form", nested_form_wrapper_selector_value: ".nested-form-wrapper" }  do |f|
     .row.m-2.py-2
       .col-12.col-md-6.d-flex.mt-2
         .pe-2.py-2.text-muted.fw-light.text-start= f.label :name, "Name:"
@@ -13,11 +13,11 @@
         .p-2.text-muted.fw-light Ingridients:
 
         %template{"data-nested-form-target" => "template"}
-          = f.fields_for :recipe_products, @recipe_product, child_index: 'NEW_RECORD' do |builder|
-            = render 'recipe_product_fields', f: builder
+          = f.fields_for :recipe_products, @recipe_product, child_index: "NEW_RECORD" do |builder|
+            = render "recipe_product_fields", f: builder
 
         = f.fields_for :recipe_products do |builder|
-          = render 'recipe_product_fields', f: builder
+          = render "recipe_product_fields", f: builder
 
         %div{"data-nested-form-target" => "target"}
         %button.btn.btn-outline-dark.me-2{"data-action" => "nested-form#add", type: "button"} Add Product
@@ -26,5 +26,5 @@
         .p-2.text-muted.fw-light= f.label :description, "Description:"
         #input-recipe-description= f.text_area :description, rows: 20, class: "form-control"
     .ps-4.pb-4
-      = link_to 'Show', @recipe, class: "btn btn-outline-dark" if @recipe.id
-      = f.submit @recipe.id ? 'Save' : 'Create', class: "btn btn-dark me-2", type: "submit"
+      = link_to "Show", @recipe, class: "btn btn-outline-dark" if @recipe.id
+      = f.submit @recipe.id ? "Save" : "Create", class: "btn btn-dark me-2", type: "submit"

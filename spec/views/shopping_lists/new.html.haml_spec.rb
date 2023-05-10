@@ -1,20 +1,17 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
-RSpec.describe 'shopping_lists/new', type: :view do
-  before(:each) do
-    assign(:shopping_list, ShoppingList.new(
-                             name: 'MyString',
-                             status: 1
-                           ))
-  end
+require "rails_helper"
 
-  it 'renders new shopping_list form' do
+RSpec.describe "shopping_lists/new" do
+  before { create(:shopping_list, name: "MyString", status: 1) }
+
+  it "renders new shopping_list form" do
     render
 
-    assert_select 'form[action=?][method=?]', shopping_lists_path, 'post' do
-      assert_select 'input[name=?]', 'shopping_list[name]'
+    assert_select "form[action=?][method=?]", shopping_lists_path, "post" do
+      assert_select "input[name=?]", "shopping_list[name]"
 
-      assert_select 'input[name=?]', 'shopping_list[status]'
+      assert_select "input[name=?]", "shopping_list[status]"
     end
   end
 end

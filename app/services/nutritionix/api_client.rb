@@ -1,4 +1,6 @@
-require 'httparty'
+# frozen_string_literal: true
+
+require "httparty"
 
 module Nutritionix
   class ApiClient
@@ -12,13 +14,13 @@ module Nutritionix
 
     def get_product_data(product)
       headers = {
-        'x-app-id': @app_id,
-        'x-app-key': @api_key
+        "x-app-id": @app_id,
+        "x-app-key": @api_key,
       }
-      response = HTTParty.post('https://trackapi.nutritionix.com/v2/natural/nutrients',
+      response = HTTParty.post("https://trackapi.nutritionix.com/v2/natural/nutrients",
                                headers:,
                                body: { query: product })
-      @product = response['foods']&.first
+      @product = response["foods"]&.first
     end
   end
 end

@@ -1,8 +1,10 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
-RSpec.describe ProductCalories, type: :model do
-  it 'creates product_calories with defined values' do
+require "rails_helper"
+
+RSpec.describe ProductCalories do
+  it "creates product_calories with defined values" do
     product_calories = build(:product_calories)
-    expect(product_calories.valid?).to eq true
+    expect(product_calories.valid?).to be_true
   end
 end
