@@ -24,11 +24,8 @@ default: &default
 development:
   <<: *default
   database: shcart_development
-  adapter: postgresql
-  encoding: unicode
-  pool: 5
-  username: <%= ENV['DB_USERNAME'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
+  username: <%= ENV["DB_USERNAME"] %>
+  password: <%= ENV["DB_PASSWORD"] %>
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -42,7 +39,7 @@ development:
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
   # domain sockets, so uncomment these lines.
-  host: ''
+  host: ""
 
   # The TCP port the server listens on. Defaults to 5432.
   # If your server runs on a different port number, change accordingly.
@@ -63,11 +60,8 @@ development:
 test:
   <<: *default
   database: shcart_test
-  adapter: postgresql
-  encoding: unicode
-  pool: 5
-  username: <%= ENV['DB_USERNAME'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
+  username: <%= ENV["DB_USERNAME"] %>
+  password: <%= ENV["DB_PASSWORD"] %>
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -91,6 +85,4 @@ test:
 #
 production:
   <<: *default
-  database: shcart_production
-  username: shcart
-  password: <%= ENV["SH_CART_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>

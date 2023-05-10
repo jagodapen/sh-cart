@@ -15,7 +15,7 @@
 - Database PostgreSQL
 - Bootstrap 5
 
-## Demo: [SH-Card Heroku](http://sh-cart.herokuapp.com/)
+<!-- ## Demo: [SH-Card Heroku](http://sh-cart.herokuapp.com/) -->
 
 ## Environment Variables
 To run this project, you will need to add the following environment variables to your config/credentials.yml.enc file
