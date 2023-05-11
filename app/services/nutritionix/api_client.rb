@@ -8,8 +8,8 @@ module Nutritionix
     format :json
 
     def initialize
-      @api_key = Rails.application.credentials.dig(:nutritionix, :api_key)
-      @app_id = Rails.application.credentials.dig(:nutritionix, :app_id)
+      @api_key = ENV["NUTRITIONIX_API_KEY"]
+      @app_id = ENV["NUTRITIONIX_APP_ID"]
     end
 
     def get_product_data(product)
