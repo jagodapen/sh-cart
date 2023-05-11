@@ -2,84 +2,57 @@
 
 class ShoppingListsController < ApplicationController
   before_action :set_shopping_list, only: %i(show edit update destroy)
-  before_action :check_email_selection, only: %i(create update)
-  # GET /shopping_lists or /shopping_lists.json
+
   def index
-    @shopping_lists = ShoppingList.all
+    @shopping_lists = repository.all
   end
 
-  # GET /shopping_lists/1 or /shopping_lists/1.json
   def show
-    @shopping_list_products = ShoppingListProduct.where(shopping_list_id: @shopping_list)
     respond_to do |format|
-      format.xlsx do
-        response.headers["Content-Disposition"] = "attachment; filename=#{file_name}.xlsx"
-      end
+      format.xlsx  { xlsx_format }
       format.html
-      format.csv do
-        response.headers["Content-Type"] = "text/csv"
-        response.headers["Content-Disposition"] = "attachment; filename=#{file_name}.csv"
-      end
-      format.pdf do
-        pdf = ShoppingListPdf.new(@shopping_list)
-        send_data pdf.render, filename: file_name.to_s,
-                              type: "application/pdf",
-                              disposition: "inline"
-      end
+      format.csv  { csv_format }
+      format.pdf { pdf_format }
     end
   end
 
-  # GET /shopping_lists/new
   def new
-    @shopping_list = ShoppingList.new
-    @shopping_list.shopping_list_products.build
-    @shopping_list_product = ShoppingListProduct.new
-    @shopping_list.build_shopping_list_email
-    @shopping_list_email = ShoppingListEmail.new
+    @shopping_list = repository.new_entity
+    build_shopping_list_product
+    build_shopping_list_email
   end
 
-  # GET /shopping_lists/1/edit
   def edit
-    @shopping_list_product = ShoppingListProduct.new
-    @shopping_list_email = ShoppingListEmail.new
+    build_shopping_list_product
+    build_shopping_list_email
   end
 
-  # POST /shopping_lists or /shopping_lists.json
   def create
-    @shopping_list = ShoppingList.new(shopping_list_params)
+    check_email_selection
+    @shopping_list = repository.new_entity(attrs: shopping_list_params)
 
-    respond_to do |format|
-      if @shopping_list.save
-        format.html { redirect_to shopping_list_url(@shopping_list), notice: "Shopping list was successfully created." }
-        format.json { render :show, status: :created, location: @shopping_list }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @shopping_list.errors, status: :unprocessable_entity }
-      end
+    if repository.save(@shopping_list)
+      redirect_to shopping_list_url(@shopping_list), notice: "Shopping list was successfully created."
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /shopping_lists/1 or /shopping_lists/1.json
   def update
-    respond_to do |format|
-      if @shopping_list.update(shopping_list_params)
-        format.html { redirect_to shopping_list_url(@shopping_list), notice: "Shopping list was successfully updated." }
-        format.json { render :show, status: :ok, location: @shopping_list }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @shopping_list.errors, status: :unprocessable_entity }
-      end
+    check_email_selection
+    @shopping_list.attributes = shopping_list_params
+
+    if repository.save(@shopping_list)
+      redirect_to shopping_list_url(@shopping_list), notice: "Shopping list was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
-  # DELETE /shopping_lists/1 or /shopping_lists/1.json
   def destroy
-    @shopping_list.destroy
+    repository.delete(@shopping_list)
 
-    respond_to do |format|
-      format.html { redirect_to shopping_lists_url, notice: "Shopping list was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to shopping_lists_url, notice: "Shopping list was successfully destroyed."
   end
 
   def send_email_now
@@ -90,12 +63,14 @@ class ShoppingListsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_shopping_list
-    @shopping_list = ShoppingList.find(params[:id])
+  def repository
+    @repository ||= ShoppingListRepository.new
   end
 
-  # Only allow a list of trusted parameters through.
+  def set_shopping_list
+    @shopping_list = repository.find(id: params[:id])
+  end
+
   def shopping_list_params
     params.require(:shopping_list).permit(:name, :shopping_day, :status, :send_email,
                                           shopping_list_products_attributes:
@@ -108,5 +83,33 @@ class ShoppingListsController < ApplicationController
     return unless params.dig(:shopping_list, :send_email) == "0"
 
     params[:shopping_list].delete :shopping_list_email_attributes
+  end
+
+  def build_shopping_list_product
+    @shopping_list_product = @shopping_list.shopping_list_products.build
+  end
+
+  def build_shopping_list_email
+    @shopping_list_email = @shopping_list.build_shopping_list_email
+  end
+
+  def file_name
+    "#{@shopping_list.name}_#{@shopping_list.shopping_day}"
+  end
+
+  def xlsx_format
+    response.headers["Content-Disposition"] = "attachment; filename=#{file_name}.xlsx"
+  end
+
+  def csv_format
+    response.headers["Content-Type"] = "text/csv"
+    response.headers["Content-Disposition"] = "attachment; filename=#{file_name}.csv"
+  end
+
+  def pdf_format
+    pdf = ShoppingListPdf.new(@shopping_list)
+    send_data pdf.render, filename: file_name.to_s,
+                          type: "application/pdf",
+                          disposition: "inline"
   end
 end

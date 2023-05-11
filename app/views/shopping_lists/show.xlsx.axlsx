@@ -7,6 +7,6 @@ wb.add_worksheet(name: "Shopping List") do |sheet|
   sheet.add_row %w(Product Quantity Unit)
   # Create entries for each item
   @shopping_list.shopping_list_products.each do |item|
-    sheet.add_row [Product.find(item.product_id).name, item.quantity, Product.find(item.product_id).unit]
+    sheet.add_row [item.product.name, item.quantity, item.product.unit]
   end
 end
