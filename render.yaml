@@ -8,6 +8,7 @@ services:
     env: ruby
     buildCommand: "./bin/render-build.sh"
     startCommand: bundle exec rails s
+    plan: free
     envVars:
       - key: DATABASE_URL
         fromDatabase:
