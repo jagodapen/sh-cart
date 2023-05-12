@@ -4,16 +4,22 @@ FactoryBot.define do
   factory :recipe_product do
     quantity { rand(1..5) }
     recipe
-    product
+    product  { create(:product) }
   end
 
   factory :recipe do
     name { Faker::Food.dish }
     description { Faker::Food.description }
     preparation_time { Faker::Number.within(range: 1..200).to_i }
-    transient do
-      recipe_product { create(:recipe_product) }
+
+    trait :with_products do
+      after(:create) do |recipe|
+        2.times { recipe.products << FactoryBot.create(:product) }
+        recipe.recipe_products.each { |i| i.update(quantity: rand(1..10), calories: rand(20..100))}
+      end
     end
+
+    factory :recipe_with_2_products, traits: [:with_products]
   end
 
   factory :shopping_list do
