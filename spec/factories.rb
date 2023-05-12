@@ -17,10 +17,21 @@ FactoryBot.define do
   end
 
   factory :shopping_list do
-    name { "MyString" }
-    shopping_day { "2022-03-15" }
-    status { 1 }
-    shopping_list_email { association :shopping_list_email }
+    name { Faker::Commerce.vendor }
+    shopping_day { Time.new.next_day(2) }
+    status { "pending" }
+    transient do
+      shopping_list_email { create(:shopping_list_email) }
+    end
+
+    trait :with_products do
+      after(:create) do |shopping_list|
+        2.times { shopping_list.products << FactoryBot.create(:product) }
+        shopping_list.shopping_list_products.each { |i| i.update(quantity: rand(1..10))}
+      end
+    end
+
+    factory :shopping_list_with_2_products, traits: [:with_products]
   end
 
   factory :product do
@@ -41,7 +52,7 @@ FactoryBot.define do
   end
 
   factory :shopping_list_email do
-    send_date { "2022-03-15" }
+    send_date { Time.new.next_day(1) }
     file_format { 0 }
     recipient { "example@email.com" }
     was_send { false }

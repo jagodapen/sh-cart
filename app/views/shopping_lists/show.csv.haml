@@ -2,4 +2,4 @@
 - headers = ["Product", "Quantity", "Unit"]
 = CSV.generate_line headers
 - @shopping_list.shopping_list_products.each do |shlp|
-  = CSV.generate_line([Product.find(shlp.product_id).name, shlp.quantity, Product.find(shlp.product_id).unit])
+  = CSV.generate_line([shlp.product.name, shlp.quantity, shlp.product.unit])
