@@ -11,7 +11,7 @@ class ShoppingListsController < ApplicationController
     respond_to do |format|
       format.xlsx { xlsx_format }
       format.html
-      format.csv  { csv_format }
+      format.csv { csv_format }
       format.pdf { pdf_format }
     end
   end
@@ -21,15 +21,16 @@ class ShoppingListsController < ApplicationController
     @all_products = products_repository.all
     build_shopping_list_product
     build_shopping_list_email
-    set_available_file_formats
-    set_available_statuses
+    @file_formats = available_file_formats
+    @statuses = available_statuses
   end
 
   def edit
+    @all_products = products_repository.all
     build_shopping_list_product
     build_shopping_list_email
-    set_available_file_formats
-    set_available_statuses
+    @file_formats = available_file_formats
+    @statuses = available_statuses
   end
 
   def create
@@ -141,11 +142,11 @@ class ShoppingListsController < ApplicationController
                           disposition: "inline"
   end
 
-  def set_available_file_formats
-    @file_formats ||= ShoppingListEmail.file_formats.keys
+  def available_file_formats
+    ShoppingListEmail.file_formats.keys
   end
 
-  def set_available_statuses
-    @statuses ||= repository.all.statuses.keys
+  def available_statuses
+    repository.all.statuses.keys
   end
 end

@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :recipe_product do
     quantity { rand(1..5) }
     recipe
-    product  { create(:product) }
+    product { create(:product) }
   end
 
   factory :recipe do
@@ -15,7 +15,7 @@ FactoryBot.define do
     trait :with_products do
       after(:create) do |recipe|
         2.times { recipe.products << FactoryBot.create(:product) }
-        recipe.recipe_products.each { |i| i.update(quantity: rand(1..10), calories: rand(20..100))}
+        recipe.recipe_products.each { |i| i.update(quantity: rand(1..10), calories: rand(20..100)) }
       end
     end
 
@@ -33,7 +33,7 @@ FactoryBot.define do
     trait :with_products do
       after(:create) do |shopping_list|
         2.times { shopping_list.products << FactoryBot.create(:product) }
-        shopping_list.shopping_list_products.each { |i| i.update(quantity: rand(1..10))}
+        shopping_list.shopping_list_products.each { |i| i.update(quantity: rand(1..10)) }
       end
     end
 

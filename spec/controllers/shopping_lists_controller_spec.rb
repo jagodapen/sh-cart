@@ -3,6 +3,7 @@
 require "rails_helper"
 
 RSpec.describe ShoppingList, type: :request do
+  # rubocop:disable RSpec/ExampleLength
   describe "GET #index" do
     it "shows all shopping lists" do
       shopping_list1 = create(:shopping_list)
@@ -11,16 +12,13 @@ RSpec.describe ShoppingList, type: :request do
       get shopping_lists_path
 
       expect(response).to be_successful
-      expect(response.body).to include(
-        *[
-          shopping_list1.name, 
-          shopping_list1.shopping_day.to_s, 
-          shopping_list2.name, 
-          shopping_list2.shopping_day.to_s
-        ]
-      )
+      expect(response.body).to include(shopping_list1.name)
+      expect(response.body).to include(shopping_list1.shopping_day.to_s)
+      expect(response.body).to include(shopping_list2.name)
+      expect(response.body).to include(shopping_list2.shopping_day.to_s)
     end
   end
+  # rubocop:enable RSpec/ExampleLength
 
   describe "GET #new" do
     it "renders form" do
@@ -37,7 +35,8 @@ RSpec.describe ShoppingList, type: :request do
       get edit_shopping_list_path(shopping_list)
 
       expect(response).to be_successful
-      expect(response.body).to include(*[shopping_list.name, shopping_list.shopping_day.to_s])
+      expect(response.body).to include(shopping_list.name)
+      expect(response.body).to include(shopping_list.shopping_day.to_s)
     end
   end
 
@@ -48,21 +47,21 @@ RSpec.describe ShoppingList, type: :request do
       get shopping_list_path(shopping_list)
 
       expect(response).to be_successful
-      expect(response.body).to include(*[shopping_list.name, shopping_list.shopping_day.to_s])
+      expect(response.body).to include(shopping_list.name)
+      expect(response.body).to include(shopping_list.shopping_day.to_s)
     end
   end
 
   describe "POST #create" do
-    let(:product1) { create(:product) }
-    let(:product2) { create(:product) }
-    let(:send_email) { "1" }
+    let(:products) { create_list(:product, 2) }
+    let(:send_email_value) { "1" }
     let(:params) do
       {
         shopping_list: {
           name: "Shopping List 1",
           shopping_day: Time.new.next_day(2),
           status: "pending",
-          send_email: send_email,
+          send_email: send_email_value,
           shopping_list_email_attributes: {
             send_date: Time.new.next_day(1),
             file_format: "csv",
@@ -71,20 +70,20 @@ RSpec.describe ShoppingList, type: :request do
           },
           shopping_list_products_attributes: {
             "0": {
-              product_id: product1.id,
+              product_id: products.first.id,
               quantity: 1,
-            }, 
+            },
             "1": {
-              product_id: product2.id,
+              product_id: products.second.id,
               quantity: 2,
             },
-          }
-        }
+          },
+        },
       }
     end
 
     it "creates new shopping list" do
-      post shopping_lists_path, params: params
+      post shopping_lists_path params
 
       expect(response).to redirect_to(shopping_list_path(described_class.last))
       expect(described_class.all.count).to eq 1
@@ -93,16 +92,17 @@ RSpec.describe ShoppingList, type: :request do
     end
 
     context "when email not set" do
-      let(:send_email) { "0" }
+      let(:send_email_value) { "0" }
 
       it "doesn't create email for shopping list" do
-        post shopping_lists_path, params: params
+        post shopping_lists_path params
 
         expect(described_class.last.shopping_list_email).to be_nil
       end
     end
   end
 
+  # rubocop:disable RSpec/ExampleLength
   describe "PUT #update" do
     it "updates shopping list" do
       shopping_list = create(:shopping_list)
@@ -122,18 +122,19 @@ RSpec.describe ShoppingList, type: :request do
             "0": {
               product_id: product1.id,
               quantity: 1,
-            }
-          }
-        }
+            },
+          },
+        },
       }
 
-      request = put shopping_list_path(shopping_list), params: new_params
+      put shopping_list_path(shopping_list), params: new_params
 
       expect(response).to redirect_to(shopping_list_path(shopping_list))
       expect(shopping_list.reload.products.count).to eq 1
       expect(shopping_list.reload.name).to eq "New Shopping List Name"
     end
   end
+  # rubocop:enable RSpec/ExampleLength
 
   describe "DELETE #destroy" do
     it "destroy shopping list" do

@@ -9,7 +9,7 @@ class RecipesController < ApplicationController
   end
 
   def show
-    @preparation_time = set_converted_preparation_time(@recipe)
+    @preparation_time = converted_preparation_time(@recipe)
   end
 
   def new
@@ -73,13 +73,13 @@ class RecipesController < ApplicationController
     @recipe_product = @recipe.recipe_products.build
   end
 
-  def set_converted_preparation_time(recipe)
+  def converted_preparation_time(recipe)
     Recipes::Representers::PreparationTime.new(recipe.preparation_time).call
   end
 
   def create_converted_preparation_times_hash(recipes)
     recipes.each_with_object({}) do |recipe, hash|
-      hash[recipe.id] = set_converted_preparation_time(recipe)
+      hash[recipe.id] = converted_preparation_time(recipe)
     end
   end
 end

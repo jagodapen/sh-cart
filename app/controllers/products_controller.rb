@@ -11,12 +11,12 @@ class ProductsController < ApplicationController
 
   def new
     @product = repository.new_entity
-    set_product_types
+    @product_types = product_types
   end
 
   def edit
     @product = repository.find(id: params[:id])
-    set_product_types
+    @product_types = product_types
   end
 
   def create
@@ -73,7 +73,7 @@ class ProductsController < ApplicationController
     params.require(:product).permit(:name, :unit, :product_type)
   end
 
-  def set_product_types
-    @product_types ||= repository.all.product_types.keys
+  def product_types
+    repository.all.product_types.keys
   end
 end
