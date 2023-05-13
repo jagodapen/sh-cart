@@ -20,7 +20,7 @@ class ShoppingListMailer < ApplicationMailer
   end
 
   def export_pdf
-    pdf = ShoppingListPdf.new(@shopping_list)
+    pdf = ShoppingLists::UseCases::CreatePdf.new(@shopping_list)
     attachments["#{@file_name}.pdf"] = { mime_type: Mime[:pdf], content: pdf.render }
   end
 

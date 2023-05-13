@@ -136,7 +136,7 @@ class ShoppingListsController < ApplicationController
   end
 
   def pdf_format
-    pdf = ShoppingLists::UseCases::CreatePdf.call(@shopping_list)
+    pdf = ShoppingLists::UseCases::CreatePdf.new(@shopping_list)
     send_data pdf.render, filename: file_name.to_s,
                           type: "application/pdf",
                           disposition: "inline"
