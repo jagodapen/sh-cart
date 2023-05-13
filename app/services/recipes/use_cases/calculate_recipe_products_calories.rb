@@ -19,7 +19,7 @@ module Recipes
 
           calories_of_one = rp.product_calories&.calories
           calculated_calories = calories_of_one * rp.quantity
-          rp.update(calories: cśalculated_calories)
+          rp.update(calories: calculated_calories)
         end
       end
     end
