@@ -6,7 +6,7 @@
       .col-12.col-sm-3
         #inputProductUnit= f.text_field :unit, class: "form-control", placeholder: :unit
       .col-12.col-sm-3
-        #inputProductType= f.select :product_type, options_for_select(types_of_products, f.object.product_type), {}, class: "form-select"
+        #inputProductType= f.select :product_type, options_for_select(@product_types, f.object.product_type), {}, class: "form-select"
     .ps-4.pb-4
       = f.submit @product.id ? "Save" : "Create", class: "btn btn-dark me-2", type: "submit"
       = link_to "Show", @product, class: "btn btn-outline-dark" if @product.id

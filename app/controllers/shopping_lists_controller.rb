@@ -9,7 +9,7 @@ class ShoppingListsController < ApplicationController
 
   def show
     respond_to do |format|
-      format.xlsx  { xlsx_format }
+      format.xlsx { xlsx_format }
       format.html
       format.csv  { csv_format }
       format.pdf { pdf_format }
@@ -18,13 +18,18 @@ class ShoppingListsController < ApplicationController
 
   def new
     @shopping_list = repository.new_entity
+    @all_products = products_repository.all
     build_shopping_list_product
     build_shopping_list_email
+    set_available_file_formats
+    set_available_statuses
   end
 
   def edit
     build_shopping_list_product
     build_shopping_list_email
+    set_available_file_formats
+    set_available_statuses
   end
 
   def create
@@ -56,15 +61,19 @@ class ShoppingListsController < ApplicationController
   end
 
   def send_email_now
-    @shopping_list = ShoppingList.find(params[:format])
+    @shopping_list = repository.find(id: params[:id])
     ShoppingListMailer.with(shopping_list: @shopping_list).shopping_list_email.deliver_now
-    redirect_to shopping_list_url(@shopping_list), notice: "Shopping list was send."
+    render :show, notice: "Shopping list was send."
   end
 
   private
 
   def repository
-    @repository ||= ShoppingListRepository.new
+    @repository ||= ShoppingLists::Repository.new
+  end
+
+  def products_repository
+    @products_repository ||= Products::Repository.new
   end
 
   def set_shopping_list
@@ -72,11 +81,30 @@ class ShoppingListsController < ApplicationController
   end
 
   def shopping_list_params
-    params.require(:shopping_list).permit(:name, :shopping_day, :status, :send_email,
-                                          shopping_list_products_attributes:
-                                            %i(id shopping_list_id product_id quantity _destroy),
-                                          shopping_list_email_attributes:
-                                            %i(id shopping_list_id send_date file_format recipient was_send _destroy))
+    params
+      .require(:shopping_list)
+      .permit(
+        :name,
+        :shopping_day,
+        :status,
+        :send_email,
+        shopping_list_products_attributes: %i(
+          id
+          shopping_list_id
+          product_id
+          quantity
+          _destroy
+        ),
+        shopping_list_email_attributes: %i(
+          id
+          shopping_list_id
+          send_date
+          file_format
+          recipient
+          was_send
+          _destroy
+        ),
+      )
   end
 
   def check_email_selection
@@ -107,9 +135,17 @@ class ShoppingListsController < ApplicationController
   end
 
   def pdf_format
-    pdf = ShoppingListPdf.new(@shopping_list)
+    pdf = ShoppingLists::UseCases::CreatePdf.call(@shopping_list)
     send_data pdf.render, filename: file_name.to_s,
                           type: "application/pdf",
                           disposition: "inline"
+  end
+
+  def set_available_file_formats
+    @file_formats ||= ShoppingListEmail.file_formats.keys
+  end
+
+  def set_available_statuses
+    @statuses ||= repository.all.statuses.keys
   end
 end

@@ -3,28 +3,22 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i(show edit update destroy)
 
-  # GET /products or /products.json
   def index
-    @products = repository.all
-    @product_types = Product.product_types.keys
+    @grouped_products = repository.all_grouped_by_type
   end
 
-  # GET /products/1 or /products/1.json
-  def show
-    @product = repository.find(id: params[:id])
-  end
+  def show; end
 
-  # GET /products/new
   def new
-    @product = Product.new
+    @product = repository.new_entity
+    set_product_types
   end
 
-  # GET /products/1/edit
   def edit
     @product = repository.find(id: params[:id])
+    set_product_types
   end
 
-  # POST /products or /products.json
   def create
     @product = repository.new_entity(attrs: product_params)
 
@@ -68,7 +62,7 @@ class ProductsController < ApplicationController
   private
 
   def repository
-    @repository ||= ProductRepository.new
+    @repository ||= Products::Repository.new
   end
 
   def set_product
@@ -77,5 +71,9 @@ class ProductsController < ApplicationController
 
   def product_params
     params.require(:product).permit(:name, :unit, :product_type)
+  end
+
+  def set_product_types
+    @product_types ||= repository.all.product_types.keys
   end
 end
