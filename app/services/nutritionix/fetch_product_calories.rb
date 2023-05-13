@@ -14,7 +14,7 @@ module Nutritionix
     private
 
     def fetch_product_calories
-      product_info = @api_client.get_product_data(@product.name)
+      product_info = @api_client.get_product_data(product_name: @product.name)
       return unless product_info.present?
 
       ProductCalories.create(product_id: @product.id,

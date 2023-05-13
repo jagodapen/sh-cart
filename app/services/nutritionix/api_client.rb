@@ -12,15 +12,15 @@ module Nutritionix
       @app_id = ENV.fetch("NUTRITIONIX_APP_ID", nil)
     end
 
-    def get_product_data(product)
+    def get_product_data(product_name:)
       headers = {
         "x-app-id": @app_id,
         "x-app-key": @api_key,
       }
       response = HTTParty.post("https://trackapi.nutritionix.com/v2/natural/nutrients",
                                headers:,
-                               body: { query: product })
-      @product = response["foods"]&.first
+                               body: { query: product_name })
+      return response["foods"]&.first
     end
   end
 end
