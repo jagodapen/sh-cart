@@ -1,6 +1,6 @@
 .nested-form-wrapper{"data-new-record" => f.object.new_record?}
   .d-flex
-    = f.select :product_id, options_from_collection_for_select(all_products, :id, :name, f.object.product_id), {}, {class: "form-select"}
+    = f.select :product_id, options_from_collection_for_select(@all_products, :id, :name, f.object.product_id), {}, {class: "form-select"}
     .flex-grow-1= f.number_field :quantity, in: 1..1000, step: 1, class: "form-control"
     %button.btn.btn-sm.btn-outline-danger{"data-action" => "nested-form#remove", :type => "button"} Remove
 

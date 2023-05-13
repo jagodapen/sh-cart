@@ -12,5 +12,5 @@
     %p.card-text Members
 
 .main-options.row.container-fluid
-  - home_cards.each do |name, src|
-    = render "home-card", :name => name, :src => src
+  - @home_cards.each do |name|
+    = render "home-card", :name => name, :src => "#{name}.svg"

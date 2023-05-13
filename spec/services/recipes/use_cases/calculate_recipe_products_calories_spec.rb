@@ -2,7 +2,7 @@
 
 require "rails_helper"
 # rubocop:disable RSpec/ExampleLength
-RSpec.describe CalculateRecipeProductsCalories do
+RSpec.describe Recipes::UseCases::CalculateRecipeProductsCalories do
   it "calculates recipe products calories" do
     product_calories1 = double(:product_calories, calories: 100)
     product_calories2 = double(:product_calories, calories: 200)

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 # rubocop:disable RSpec/ExampleLength
-RSpec.describe FetchProductCalories do
+RSpec.describe Nutritionix::FetchProductCalories do
   describe "#fetch_calories" do
     it "sends request to NutritionixAPI for calories info and saves data" do
       product_calories_data = { "food_name" => "brie",

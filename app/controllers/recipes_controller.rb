@@ -5,17 +5,22 @@ class RecipesController < ApplicationController
 
   def index
     @recipes = repository.all
+    @converted_preparation_times = create_converted_preparation_times_hash(@recipes)
   end
 
-  def show; end
+  def show
+    @preparation_time = converted_preparation_time(@recipe)
+  end
 
   def new
     @recipe = repository.new_entity
     build_recipe_product
+    @all_products = products_repository.all
   end
 
   def edit
     build_recipe_product
+    @all_products = products_repository.all
   end
 
   def create
@@ -47,7 +52,11 @@ class RecipesController < ApplicationController
   private
 
   def repository
-    RecipeRepository.new
+    @repository ||= Recipes::Repository.new
+  end
+
+  def products_repository
+    @products_repository ||= Products::Repository.new
   end
 
   def set_recipe
@@ -62,5 +71,15 @@ class RecipesController < ApplicationController
 
   def build_recipe_product
     @recipe_product = @recipe.recipe_products.build
+  end
+
+  def converted_preparation_time(recipe)
+    Recipes::Representers::PreparationTime.new(recipe.preparation_time).call
+  end
+
+  def create_converted_preparation_times_hash(recipes)
+    recipes.each_with_object({}) do |recipe, hash|
+      hash[recipe.id] = converted_preparation_time(recipe)
+    end
   end
 end

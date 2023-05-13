@@ -8,6 +8,6 @@ class Recipe < ApplicationRecord
   after_save :calculate_calories
 
   def calculate_calories
-    Recipes::CalculateRecipeProductsCalories.new(self).call
+    Recipes::UseCases::CalculateRecipeProductsCalories.new(self).call
   end
 end

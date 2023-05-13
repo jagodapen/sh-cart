@@ -3,7 +3,7 @@
     .row.m-2.py-2
       .col-6.col-sm-2.d-flex.flex-column
         .pe-2.py-2.text-muted.fw-light.text-start= f.label :status, "Status:"
-        #input-shopping-list-status= f.select :status, options_for_select(shopping_list_statuses, f.object.status), {}, class: "form-select"
+        #input-shopping-list-status= f.select :status, options_for_select(@statuses, f.object.status), {}, class: "form-select"
       .col-12.col-sm-6.d-flex.flex-column
         .pe-2.py-2.text-muted.fw-light.text-start= f.label :name, "Name:"
         #input-shopping-list-name= f.text_field :name, class: "form-control", placeholder: :name
@@ -37,7 +37,7 @@
                 #input-shopping-list-status= email.date_field :send_date, class: "form-select", placeholder: Date.today
               .d-flex.flex-column
                 .pe-2.py-2.text-muted.fw-light.text-start= email.label :file_format, "Format:"
-                #input-shopping-list-date= email.select :file_format, options_for_select(shopping_list_file_formats, email.object.file_format), {}, class: "form-control"
+                #input-shopping-list-date= email.select :file_format, options_for_select(@file_formats, email.object.file_format), {}, class: "form-control"
               .d-flex.flex-column
                 .pe-2.py-2.text-muted.fw-light.text-start= email.label :recipient, "Email adress:"
                 #input-shopping-list-name= email.email_field :recipient, class: "form-control"
