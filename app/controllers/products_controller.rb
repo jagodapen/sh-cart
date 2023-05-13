@@ -22,41 +22,29 @@ class ProductsController < ApplicationController
   def create
     @product = repository.new_entity(attrs: product_params)
 
-    respond_to do |format|
-      if repository.save(@product)
-        format.html { redirect_to product_url(@product), notice: "Product was successfully created." }
-        format.json { render :show, status: :created, location: @product }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
-      end
+    if repository.save(@product)
+      redirect_to product_url(@product), notice: "Product was successfully created."
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /products/1 or /products/1.json
   def update
     @product = repository.find(id: params[:id])
     @product.attributes = product_params
-    respond_to do |format|
-      if repository.save(@product)
-        format.html { redirect_to product_url(@product), notice: "Product was successfully updated." }
-        format.json { render :show, status: :ok, location: @product }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
-      end
+
+    if repository.save(@product)
+      redirect_to product_url(@product), notice: "Product was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
-  # DELETE /products/1 or /products/1.json
   def destroy
     @product = repository.find(id: params[:id])
     repository.delete(@product)
 
-    respond_to do |format|
-      format.html { redirect_to products_url, status: :see_other, notice: "Product was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to products_url, status: :see_other, notice: "Product was successfully destroyed."
   end
 
   private

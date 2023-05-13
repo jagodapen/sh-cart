@@ -8,8 +8,8 @@ module Nutritionix
     format :json
 
     def initialize
-      @api_key = ENV.fetch["NUTRITIONIX_API_KEY", nil]
-      @app_id = ENV.fetch["NUTRITIONIX_APP_ID", nil]
+      @api_key = ENV.fetch("NUTRITIONIX_API_KEY", nil)
+      @app_id = ENV.fetch("NUTRITIONIX_APP_ID", nil)
     end
 
     def get_product_data(product)
