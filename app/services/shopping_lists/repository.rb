@@ -25,7 +25,7 @@ module ShoppingLists
     end
 
     def delete(shopping_list)
-      shopping_list.delete
+      shopping_list.destroy
     end
   end
 end

@@ -29,7 +29,7 @@ module Products
     end
 
     def delete(product)
-      product.delete
+      product.destroy
     end
   end
 end

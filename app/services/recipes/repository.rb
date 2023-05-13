@@ -25,7 +25,7 @@ module Recipes
     end
 
     def delete(recipe)
-      recipe.delete
+      recipe.destroy
     end
   end
 end
