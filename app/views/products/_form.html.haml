@@ -1,11 +1,9 @@
 #form-container.bg-light.mx-5
   = form_for @product do |f|
     .row.m-2.py-4
-      .col-12.col-sm-6
+      .col-12.col-sm-8
         #inputProductName= f.text_field :name, class: "form-control", placeholder: :name
-      .col-12.col-sm-3
-        #inputProductUnit= f.text_field :unit, class: "form-control", placeholder: :unit
-      .col-12.col-sm-3
+      .col-12.col-sm-4
         #inputProductType= f.select :product_type, options_for_select(@product_types, f.object.product_type), {}, class: "form-select"
     .ps-4.pb-4
       = f.submit @product.id ? "Save" : "Create", class: "btn btn-dark me-2", type: "submit"
