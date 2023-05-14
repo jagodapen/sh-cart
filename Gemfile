@@ -88,3 +88,4 @@ gem "prawn"
 gem "rubyzip"
 gem "sidekiq"
 gem "whenever", require: false
+gem "dry-validation", "~> 1.7"
