@@ -3,6 +3,8 @@
 module Products
   module UseCases
     class CreateProduct
+      InvalidParams = Class.new(StandardError)
+
       def initialize(params)
         @params = params
       end
@@ -15,7 +17,9 @@ module Products
       private
 
       def validate_product_params
-        Products::Validators::ProductParams.new.call(@params)
+        validation = Products::Validators::ProductParams.new.call(@params)
+
+        raise InvalidParams, "Invalid params" if validation.errors.any?
       end
 
       def create_product

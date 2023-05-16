@@ -12,7 +12,6 @@
         .d-flex.align-items-center.list-group-item.list-group-item-action.p-1
           .px-2.flex-grow-1= shl_product.product.name
           .px-2= shl_product.quantity
-          .px-2.text-align-start.text-muted.fw-light= "(#{ shl_product.product.unit })"
     .col
       %button.btn.btn-dark.m-2.position-relative(type="button")= link_to "Export ExcelSheet", shopping_list_path(format: "xlsx"), class: "text-light text-decoration-none stretched-link"
       %button.btn.btn-dark.m-2.position-relative(type="button")= link_to "Export CSV", shopping_list_path(format: "csv"), class: "text-light text-decoration-none stretched-link"

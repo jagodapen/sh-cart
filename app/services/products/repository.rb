@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Products
-  class Repository
+  class Repository < Base::Repository
     attr_reader :adapter
 
     def initialize(adapter: Product)
@@ -18,6 +18,8 @@ module Products
 
     def find(id:)
       adapter.includes(:product_calories, :recipes).find(id)
+    rescue ActiveRecord::RecordNotFound => e
+      raise_error(e.message)
     end
 
     def new_entity(attrs: nil)
@@ -26,6 +28,8 @@ module Products
 
     def save(product)
       product.save
+    rescue ActiveRecord::RecordInvalid => e
+      raise_error(e.message)
     end
 
     def delete(product)
