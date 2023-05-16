@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class ProductsController < ApplicationController
-  before_action :set_product, only: %i(update destroy)
   before_action :set_product_types, only: %i(new edit create update)
 
   def index
@@ -60,15 +59,11 @@ class ProductsController < ApplicationController
     @repository ||= Products::Repository.new
   end
 
-  def set_product
-    @product = repository.find(id: params[:id])
-  end
-
   def product_params
     params.require(:product).permit(:name, :unit, :product_type)
   end
 
   def set_product_types
-    @product_types = repository.all.product_types.keys
+    @product_types ||= repository.all.product_types.keys
   end
 end
