@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ProductsController < ApplicationController
-  before_action :set_product_types, only: %i(new edit create update)
+  before_action :product_types, only: %i(new edit create update)
 
   def index
     @grouped_products = repository.all_grouped_by_type
@@ -9,8 +9,7 @@ class ProductsController < ApplicationController
 
   def show
     @product = repository.find(id: params[:id])
-
-  rescue Base::RepositoryError => e
+  rescue Base::Repository::RepositoryError
     redirect_to products_url, alert: "Object doesn't exist"
   end
 
@@ -20,18 +19,17 @@ class ProductsController < ApplicationController
 
   def edit
     @product = repository.find(id: params[:id])
-
-  rescue Base::RepositoryError => e
+  rescue Base::Repository::RepositoryError
     redirect_to products_url, alert: "Object doesn't exist"
   end
 
   def create
     @product = repository.new_entity(attrs: product_params)
-
-    if repository.save(@product)
-      redirect_to product_url(@product), notice: "Product was successfully created."
+    @product = Products::UseCases::CreateProduct.new(@product).call
+    if @product.errors.any?
+      render :new, status: :unprocessable_entity, alert: @product.errors.messages
     else
-      render :new, status: :unprocessable_entity
+      redirect_to product_url(@product), notice: "Product was successfully created."
     end
   end
 
@@ -60,10 +58,10 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:name, :unit, :product_type)
+    params.require(:product).permit(:name, :product_type)
   end
 
-  def set_product_types
+  def product_types
     @product_types ||= repository.all.product_types.keys
   end
 end

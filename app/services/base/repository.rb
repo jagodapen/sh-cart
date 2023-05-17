@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 module Base
-  RepositoryError = Class.new(StandardError)
-  
   class Repository
+    RepositoryError = Class.new(StandardError)
     def raise_error(message)
-      raise Base::RepositoryError, message
+      raise Base::Repository::RepositoryError, message
     end
   end
 end

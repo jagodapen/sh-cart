@@ -5,6 +5,7 @@ module Products
     attr_reader :adapter
 
     def initialize(adapter: Product)
+      super()
       @adapter = adapter
     end
 

@@ -1,7 +1,20 @@
 # frozen_string_literal: true
 
 class Product < ApplicationRecord
-  PRODUCT_TYPES = %w(fruit vegetable nuts meat egg seafood dairy_products cereal_products spices extras fat drink other)
+  PRODUCT_TYPES = %w(
+    fruit
+    vegetable
+    nuts
+    meat
+    egg
+    seafood
+    dairy_products
+    cereal_products
+    spices extras
+    fat
+    drink
+    other
+  ).freeze
 
   has_many :recipe_products
   has_many :recipes, through: :recipe_products

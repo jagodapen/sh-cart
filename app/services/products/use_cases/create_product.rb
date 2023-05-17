@@ -3,28 +3,33 @@
 module Products
   module UseCases
     class CreateProduct
-      InvalidParams = Class.new(StandardError)
+      extend ActiveModel::Naming
 
-      def initialize(params)
-        @params = params
+      def initialize(product)
+        @product = product
+        @params = @product.attributes.symbolize_keys
+        ActiveModel::Errors.new(@product)
       end
 
       def call
         validate_product_params
-        create_product
+        create_product if @validation.errors.empty?
+        @product
       end
 
       private
 
+      # rubocop:disable Style/HashSyntax
       def validate_product_params
-        validation = Products::Validators::ProductParams.new.call(@params)
-
-        raise InvalidParams, "Invalid params" if validation.errors.any?
+        @validation = Products::Validators::ProductParams.new.call(@params)
+        @validation.errors.to_h.each do |attribute, message|
+          @product.errors.add(attribute, message: message)
+        end
       end
+      # rubocop:enable Style/HashSyntax
 
       def create_product
-        product = repository.new_entity(attrs: product_params)
-        repository.save(product)
+        repository.save(@product)
       end
 
       def product_params
