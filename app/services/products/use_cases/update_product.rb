@@ -10,7 +10,7 @@ module Products
 
       def call
         validate_product_params
-        update_product if @validation.errors.empty?
+        update_product if @product.errors.empty?
         @product
       end
 
@@ -18,10 +18,11 @@ module Products
 
       # rubocop:disable Style/HashSyntax
       def validate_product_params
-        @validation = Products::Validators::ProductParams.new.call(product_params)
+        @validation = Products::Validators::UpdateProductParams.new.call(product_params)
         @validation.errors.to_h.each do |attribute, message|
           @product.errors.add(attribute, message: message)
         end
+        @product.errors.add(:name, message: "Renaming is not allowed") if name_changed?
       end
       # rubocop:enable Style/HashSyntax
 
@@ -31,14 +32,15 @@ module Products
       end
 
       def product_params
-        {
-          name: @params[:name],
-          product_type: @params[:product_type],
-        }.compact
+        { product_type: @params[:product_type] }.compact
       end
 
       def repository
         @repository ||= Products::Repository.new
+      end
+
+      def name_changed?
+        @params[:name] != @product.name
       end
     end
   end
