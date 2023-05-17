@@ -46,8 +46,7 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    @product = repository.find(id: params[:id])
-    repository.delete(@product)
+    Products::UseCases::DeleteProduct.new(params[:id]).call
 
     redirect_to products_url, status: :see_other, notice: "Product was successfully destroyed."
   end

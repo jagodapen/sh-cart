@@ -30,7 +30,6 @@ module Products
 
       def create_product
         repository.save(@product)
-        # @product
       end
 
       def fetch_calories
