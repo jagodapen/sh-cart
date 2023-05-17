@@ -35,13 +35,14 @@ class ProductsController < ApplicationController
 
   def update
     @product = repository.find(id: params[:id])
-    @product.attributes = product_params
-
-    if repository.save(@product)
-      redirect_to product_url(@product), notice: "Product was successfully updated."
+    @product = Products::UseCases::UpdateProduct.new(@product, product_params).call
+    if @product.errors.any?
+      render :edit, status: :unprocessable_entity, alert: @product.errors.messages
     else
-      render :edit, status: :unprocessable_entity
+      redirect_to product_url(@product), notice: "Product was successfully updated."
     end
+  rescue Base::Repository::RepositoryError
+    redirect_to products_url, alert: "Object doesn't exist"
   end
 
   def destroy
