@@ -3,12 +3,9 @@
 module Products
   module UseCases
     class CreateProduct
-      extend ActiveModel::Naming
-
       def initialize(product)
         @product = product
         @params = @product.attributes.symbolize_keys
-        ActiveModel::Errors.new(@product)
       end
 
       def call
