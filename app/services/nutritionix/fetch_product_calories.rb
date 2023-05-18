@@ -2,9 +2,9 @@
 
 module Nutritionix
   class FetchProductCalories
-    def initialize(product, api_client)
+    def initialize(product_name:, api_client:)
       @api_client = api_client
-      @product = product
+      @product_name = product_name
     end
 
     def call
@@ -14,14 +14,7 @@ module Nutritionix
     private
 
     def fetch_product_calories
-      product_info = @api_client.get_product_data(product_name: @product.name)
-      return unless product_info.present?
-
-      ProductCalories.create(product_id: @product.id,
-                             calories: product_info["nf_calories"],
-                             unit: product_info["serving_unit"],
-                             grams: product_info["serving_weight_grams"],
-                             full_name: product_info["food_name"])
+      @api_client.get_product_data(product_name: @product_name)
     end
   end
 end

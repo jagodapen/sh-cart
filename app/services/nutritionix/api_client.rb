@@ -13,13 +13,28 @@ module Nutritionix
     end
 
     def get_product_data(product_name:)
-      headers = {
+      response = send_request(product_name)
+      get_first_result(response)
+    end
+
+    private
+
+    def send_request(product_name)
+      HTTParty.post(
+        "https://trackapi.nutritionix.com/v2/natural/nutrients",
+        headers:,
+        body: { query: product_name },
+      )
+    end
+
+    def headers
+      {
         "x-app-id": @app_id,
         "x-app-key": @api_key,
       }
-      response = HTTParty.post("https://trackapi.nutritionix.com/v2/natural/nutrients",
-                               headers:,
-                               body: { query: product_name })
+    end
+
+    def get_first_result(response)
       response["foods"]&.first
     end
   end

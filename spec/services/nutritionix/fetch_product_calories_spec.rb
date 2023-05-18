@@ -2,22 +2,21 @@
 
 require "rails_helper"
 
-# rubocop:disable RSpec/ExampleLength
 RSpec.describe Nutritionix::FetchProductCalories do
-  describe "#fetch_calories" do
-    it "sends request to NutritionixAPI for calories info and saves data" do
-      product_calories_data = { "food_name" => "brie",
-                                "serving_qty" => 1,
-                                "serving_unit" => "oz",
-                                "serving_weight_grams" => 28.35,
-                                "nf_calories" => 94.69 }
-      allow_any_instance_of(Nutritionix::ApiClient).to receive(:get_product_data).and_return(product_calories_data)
-      product = create(:product)
-      expect(product.product_calories[:calories]).to eq(product_calories_data["nf_calories"])
-      expect(product.product_calories[:unit]).to eq(product_calories_data["serving_unit"])
-      expect(product.product_calories[:grams]).to eq(product_calories_data["serving_weight_grams"].to_i)
-      expect(product.product_calories[:full_name]).to eq(product_calories_data["food_name"])
+  describe "#call" do
+    subject { described_class.new(product_name: product.name, api_client:) }
+
+    let(:product) { build(:product) }
+    let(:api_client) { double("Nutritionix::ApiClient", get_product_data: product_info) }
+    let(:product_info) { { sample_key: "sample name" } }
+
+    it "sends request to api client for product calories info" do
+      subject.call
+      expect(api_client).to have_received(:get_product_data).with(product_name: product.name)
+    end
+
+    it "returns product_info" do
+      expect(subject.call).to eq(product_info)
     end
   end
 end
-# rubocop:enable RSpec/ExampleLength

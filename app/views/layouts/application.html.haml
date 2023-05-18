@@ -17,7 +17,7 @@
       - if notice
         %p.notice.alert.alert-success= flash.now[:notice]
       - if alert
-        %p.notice.alert.alert-success= flash.now[:alert]
+        %p.notice.alert.alert-danger= flash.now[:alert]
 
     = yield
 

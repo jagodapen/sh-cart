@@ -1,49 +1,46 @@
 # frozen_string_literal: true
 
 class ProductsController < ApplicationController
-  before_action :set_product, only: %i(show edit update destroy)
+  before_action :product_types, only: %i(new edit create update)
 
   def index
     @grouped_products = repository.all_grouped_by_type
   end
 
-  def show; end
+  def show
+    @product = repository.find(id: params[:id])
+  end
 
   def new
     @product = repository.new_entity
-    @product_types = product_types
   end
 
   def edit
     @product = repository.find(id: params[:id])
-    @product_types = product_types
   end
 
   def create
     @product = repository.new_entity(attrs: product_params)
-
-    if repository.save(@product)
-      redirect_to product_url(@product), notice: "Product was successfully created."
+    @product = Products::UseCases::CreateProduct.new(@product).call
+    if @product.errors.any?
+      render :new, status: :unprocessable_entity, alert: @product.errors.messages
     else
-      render :new, status: :unprocessable_entity
+      redirect_to product_url(@product), notice: "Product was successfully created."
     end
   end
 
   def update
     @product = repository.find(id: params[:id])
-    @product.attributes = product_params
-
-    if repository.save(@product)
-      redirect_to product_url(@product), notice: "Product was successfully updated."
+    @product = Products::UseCases::UpdateProduct.new(@product, product_params).call
+    if @product.errors.any?
+      render :edit, status: :unprocessable_entity, alert: @product.errors.messages
     else
-      render :edit, status: :unprocessable_entity
+      redirect_to product_url(@product), notice: "Product was successfully updated."
     end
   end
 
   def destroy
-    @product = repository.find(id: params[:id])
-    repository.delete(@product)
-
+    Products::UseCases::DeleteProduct.new(params[:id]).call
     redirect_to products_url, status: :see_other, notice: "Product was successfully destroyed."
   end
 
@@ -53,15 +50,11 @@ class ProductsController < ApplicationController
     @repository ||= Products::Repository.new
   end
 
-  def set_product
-    @product = repository.find(id: params[:id])
-  end
-
   def product_params
-    params.require(:product).permit(:name, :unit, :product_type)
+    params.require(:product).permit(:name, :product_type)
   end
 
   def product_types
-    repository.all.product_types.keys
+    @product_types ||= repository.all.product_types.keys
   end
 end

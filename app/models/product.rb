@@ -1,6 +1,21 @@
 # frozen_string_literal: true
 
 class Product < ApplicationRecord
+  PRODUCT_TYPES = %w(
+    fruit
+    vegetable
+    nuts
+    meat
+    egg
+    seafood
+    dairy_products
+    cereal_products
+    spices extras
+    fat
+    drink
+    other
+  ).freeze
+
   has_many :recipe_products
   has_many :recipes, through: :recipe_products
   has_one :product_calories
@@ -12,7 +27,6 @@ class Product < ApplicationRecord
   has_many :shopping_lists, through: :shopping_list_products
 
   validates :name, presence: true, length: { minimum: 2, maximum: 50 }
-  validates :unit, presence: true, length: { maximum: 15 }
 
   enum :product_type, { fruit: 0,
                         vegetable: 1,
@@ -27,11 +41,4 @@ class Product < ApplicationRecord
                         fat: 10,
                         drink: 11,
                         other: 12 }
-
-  after_save :fetch_calories
-
-  def fetch_calories
-    nutritionix_product = Nutritionix::ApiClient.new
-    Nutritionix::FetchProductCalories.new(self, nutritionix_product).call
-  end
 end
