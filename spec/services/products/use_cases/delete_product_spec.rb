@@ -11,11 +11,11 @@ RSpec.describe Products::UseCases::DeleteProduct do
 
     context "with valid params" do
       it "deletes the product" do
-        expect { subject.call }.to change(Product, :count).by -1
+        expect { subject.call }.to change(Product, :count).by(-1)
       end
 
       it "deletes product calories" do
-        expect { subject.call }.to change(ProductCalories, :count).by -1
+        expect { subject.call }.to change(ProductCalories, :count).by(-1)
       end
     end
 

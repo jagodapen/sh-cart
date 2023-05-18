@@ -12,29 +12,38 @@ module Products
         validate_product_params
         if @validation.errors.empty?
           create_product
-          fetch_calories
+          create_product_calories
         end
         @product
       end
 
       private
 
-      # rubocop:disable Style/HashSyntax
       def validate_product_params
         @validation = Products::Validators::CreateProductParams.new.call(@params)
         @validation.errors.to_h.each do |attribute, message|
-          @product.errors.add(attribute, message: message)
+          @product.errors.add(attribute, message:)
         end
       end
-      # rubocop:enable Style/HashSyntax
 
       def create_product
         repository.save(@product)
       end
 
+      def create_product_calories
+        product_info = fetch_calories
+        ProductCalories.create(
+          product_id: @product.id,
+          calories: product_info["nf_calories"],
+          unit: product_info["serving_unit"],
+          grams: product_info["serving_weight_grams"],
+          full_name: product_info["food_name"],
+        )
+      end
+
       def fetch_calories
-        nutritionix_product = Nutritionix::ApiClient.new
-        Nutritionix::FetchProductCalories.new(@product, nutritionix_product).call
+        api_client = Nutritionix::ApiClient.new
+        Nutritionix::FetchProductCalories.new(product_name: @product.name, api_client:).call
       end
 
       def product_params

@@ -43,7 +43,7 @@ FactoryBot.define do
 
     trait :with_calories do
       after(:create) do |product|
-        create(:product_calories, product: product)
+        create(:product_calories, product:)
       end
     end
 

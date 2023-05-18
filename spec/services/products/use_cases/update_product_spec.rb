@@ -11,7 +11,7 @@ RSpec.describe Products::UseCases::UpdateProduct do
 
     context "with valid params" do
       let(:params) { { name: product.name, product_type: product_types.third } }
-      
+
       it "updates the product" do
         expect { subject.call }.to change(product, :product_type).from(product_types.second).to(product_types.third)
       end
