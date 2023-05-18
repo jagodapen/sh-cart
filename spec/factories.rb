@@ -26,9 +26,6 @@ FactoryBot.define do
     name { Faker::Commerce.vendor }
     shopping_day { Time.new.next_day(2) }
     status { "pending" }
-    transient do
-      shopping_list_email { create(:shopping_list_email) }
-    end
 
     trait :with_products do
       after(:create) do |shopping_list|
@@ -42,11 +39,15 @@ FactoryBot.define do
 
   factory :product do
     name { Faker::Food.ingredient }
-    unit { Faker::Food.metric_measurement }
     product_type { rand(0..12) }
-    transient do
-      product_calories { create(:product_calories) }
+
+    trait :with_calories do
+      after(:create) do |product|
+        create(:product_calories, product: product)
+      end
     end
+
+    factory :product_with_calories, traits: [:with_calories]
   end
 
   factory :product_calories do
