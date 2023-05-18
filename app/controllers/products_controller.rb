@@ -9,8 +9,6 @@ class ProductsController < ApplicationController
 
   def show
     @product = repository.find(id: params[:id])
-  rescue Base::Repository::RepositoryError
-    redirect_to products_url, alert: "Object doesn't exist"
   end
 
   def new
@@ -19,8 +17,6 @@ class ProductsController < ApplicationController
 
   def edit
     @product = repository.find(id: params[:id])
-  rescue Base::Repository::RepositoryError
-    redirect_to products_url, alert: "Object doesn't exist"
   end
 
   def create
@@ -41,13 +37,10 @@ class ProductsController < ApplicationController
     else
       redirect_to product_url(@product), notice: "Product was successfully updated."
     end
-  rescue Base::Repository::RepositoryError
-    redirect_to products_url, alert: "Object doesn't exist"
   end
 
   def destroy
     Products::UseCases::DeleteProduct.new(params[:id]).call
-
     redirect_to products_url, status: :see_other, notice: "Product was successfully destroyed."
   end
 
