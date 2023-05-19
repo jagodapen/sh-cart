@@ -68,9 +68,21 @@ class RecipesController < ApplicationController
   end
 
   def recipe_params
-    params.require(:recipe).permit(:name, :description, :preparation_time,
-                                   recipe_products_attributes:
-                                   %i(id recipe_id product_id quantity calories _destroy))
+    params.require(:recipe).permit(
+      :name, 
+      :description, 
+      :preparation_time,
+      recipe_products_attributes: %i(
+        id
+        recipe_id
+        product_id
+        quantity
+        calories
+        unit
+        grams
+        _destroy
+      )
+    )
   end
 
   def build_recipe_product

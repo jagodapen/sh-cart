@@ -1,7 +1,17 @@
 .nested-form-wrapper{"data-new-record" => f.object.new_record?}
-  .d-flex
-    = f.select :product_id, options_from_collection_for_select(@all_products, :id, :name, f.object.product_id), {}, {class: "form-select"}
-    .flex-grow-1= f.number_field :quantity, in: 1..1000, step: 1, class: "form-control"
-    %button.btn.btn-sm.btn-outline-danger{"data-action" => "nested-form#remove", :type => "button"} Remove
+  .row
+    .col-10.col-md-3= f.select :product_id, options_from_collection_for_select(@all_products, :id, :name, f.object.product_id), {}, {class: "form-select"}
+    .col-2.col-md-2.order-md-2
+      %button.btn.btn-outline-danger.mx-0{"data-action" => "nested-form#remove", :type => "button"} X
+    .col-12.col-md-7.d-flex.order-md-1
+      .d-flex.flex-nowrap.input-group.no-wrap
+        %span.input-group-text.text-muted.fw-light= f.label :quantity
+        = f.number_field :quantity, in: 1..1000, step: "any", class: "form-control"
+      .d-flex.flex-nowrap.input-group.no-wrap
+        = f.text_field :unit, class: "form-control"
+        %span.input-group-text.text-muted.fw-light= f.label :unit
+      .d-flex.flex-nowrap.input-group.no-wrap
+        = f.number_field :grams, in: 1..1000, class: "form-control"
+        %span.input-group-text.text-muted.fw-light= f.label :grams
 
     = f.hidden_field :_destroy
