@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class RecipesController < ApplicationController
-  before_action :set_recipe, only: %i(show edit update destroy)
+  before_action :set_recipe, only: %i(update destroy)
 
   def index
     @recipes = repository.all
@@ -9,6 +9,7 @@ class RecipesController < ApplicationController
   end
 
   def show
+    @recipe = repository.find(id: params[:id])
     @preparation_time = converted_preparation_time(@recipe)
   end
 
@@ -19,17 +20,20 @@ class RecipesController < ApplicationController
   end
 
   def edit
+    @recipe = repository.find(id: params[:id])
     build_recipe_product
     @all_products = products_repository.all
   end
 
   def create
     @recipe = repository.new_entity(attrs: recipe_params)
+    @all_products = products_repository.all
+    @recipe = Recipes::UseCases::CreateRecipe.new(@recipe).call
 
-    if repository.save(@recipe)
-      redirect_to recipe_url(@recipe), notice: "Recipe was successfully created."
+    if @recipe.errors.any?
+      render :new, status: :unprocessable_entity, alert: @recipe.errors.messages
     else
-      render :new, status: :unprocessable_entity
+      redirect_to recipe_url(@recipe), notice: "Recipe was successfully created."
     end
   end
 
