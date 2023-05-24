@@ -28,9 +28,10 @@ class RecipesController < ApplicationController
   def create
     @recipe = repository.new_entity(attrs: recipe_params)
     @all_products = products_repository.all
-    @recipe = Recipes::UseCases::CreateRecipe.new(@recipe).call
+    @recipe = Recipes::UseCases::CreateRecipe.new(@recipe, recipe_params).call
 
     if @recipe.errors.any?
+      build_recipe_product
       render :new, status: :unprocessable_entity, alert: @recipe.errors.messages
     else
       redirect_to recipe_url(@recipe), notice: "Recipe was successfully created."
@@ -69,8 +70,8 @@ class RecipesController < ApplicationController
 
   def recipe_params
     params.require(:recipe).permit(
-      :name, 
-      :description, 
+      :name,
+      :description,
       :preparation_time,
       recipe_products_attributes: %i(
         id
@@ -83,6 +84,10 @@ class RecipesController < ApplicationController
         _destroy
       )
     )
+  end
+
+  def recipe_params_for_service
+    @recipe_params_for_service ||= recipe_params.to_h
   end
 
   def build_recipe_product
