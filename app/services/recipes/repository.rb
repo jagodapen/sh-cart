@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 module Recipes
-  class Repository
+  class Repository < Base::Repository
     attr_reader :adapter
 
     def initialize(adapter: Recipe)
+      super()
       @adapter = adapter
     end
 
@@ -14,6 +15,8 @@ module Recipes
 
     def find(id:)
       adapter.includes(recipe_products: :product).find(id)
+    rescue ActiveRecord::RecordInvalid => e
+      raise_error(e.message)
     end
 
     def new_entity(attrs: nil)
@@ -22,6 +25,8 @@ module Recipes
 
     def save(recipe)
       recipe.save
+    rescue ActiveRecord::RecordInvalid => e
+      raise_error(e.message)
     end
 
     def delete(recipe)
