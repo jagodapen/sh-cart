@@ -86,10 +86,6 @@ class RecipesController < ApplicationController
     )
   end
 
-  def recipe_params_for_service
-    @recipe_params_for_service ||= recipe_params.to_h
-  end
-
   def build_recipe_product
     @recipe_product = @recipe.recipe_products.build
   end
