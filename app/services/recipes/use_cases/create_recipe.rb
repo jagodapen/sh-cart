@@ -28,11 +28,11 @@ module Recipes
         @validation.errors.to_h.each do |attribute, message|
           recipe.errors.add(attribute, message:) unless attribute == :recipe_products_attributes
 
-            message.each do |_, recipe_products_attributes_error|
-              unless recipe.errors.messages[:base].include?(recipe_products_attributes_error&.first)
-                recipe.errors.add(:base, message: recipe_products_attributes_error)
-              end
+          message.each do |_, recipe_products_attributes_error|
+            unless recipe.errors.messages[:base].include?(recipe_products_attributes_error&.first)
+              recipe.errors.add(:base, message: recipe_products_attributes_error)
             end
+          end
         end
       end
 
@@ -53,7 +53,7 @@ module Recipes
       end
 
       def new_recipe_params
-        @new_recipe_params ||= converted_params.merge({recipe_products_attributes: []})
+        @new_recipe_params ||= converted_params.merge({ recipe_products_attributes: [] })
       end
 
       def create_recipe_products
@@ -69,15 +69,15 @@ module Recipes
         recipe_products_params.map do |params|
           params.merge(
             {
-              calories: products_calories[params[:product_id]],
+              calories: products_calories[params[:product_id]] || 0,
               recipe_id: @recipe.id,
-            }
+            },
           ).except(:_destroy)
         end
       end
 
       def recipe_products_params
-        @recipe_products_params ||= params[:recipe_products_attributes].values.each_with_object([]) do |params, arr| 
+        @recipe_products_params ||= params[:recipe_products_attributes].values.each_with_object([]) do |params, arr|
           arr.push({
             product_id: params[:product_id].to_i,
             quantity: params[:quantity].blank? ? nil : params[:quantity].to_i,

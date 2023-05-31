@@ -82,7 +82,7 @@ class RecipesController < ApplicationController
         unit
         grams
         _destroy
-      )
+      ),
     )
   end
 

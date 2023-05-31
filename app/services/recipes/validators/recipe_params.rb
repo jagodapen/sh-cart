@@ -21,6 +21,10 @@ module Recipes
         key.failure("must consist of letters") unless value.to_i.zero? && value != "0"
       end
 
+      rule(:recipe_products_attributes) do
+        key.failure("must contain products") if value.empty?
+      end
+
       rule(:recipe_products_attributes).each do
         provided_only_one = (value[:quantity].blank? != value[:unit].blank?)
         provided_at_least_one_measure = value[:quantity].present? || value[:grams].present?
